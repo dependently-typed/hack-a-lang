@@ -10,27 +10,25 @@ class Scanner:
         self.line = 1
         self.tokenStrings = {
             # Paranthesis and Symbols
-            '(': lambda f: TokenType.LEFT_PAREN,
-            ')': lambda f: TokenType.RIGHT_PAREN,
-            '{': lambda f: TokenType.LEFT_BRACE,
-            '}': lambda f: TokenType.RIGHT_BRACE,
-            ',': lambda f: TokenType.COMMA,
-            '.': lambda f: TokenType.DOT,
-            '-': lambda f: TokenType.MINUS,
-            '+': lambda f: TokenType.PLUS,
-            ';': lambda f: TokenType.SEMICOLON,
-            '*': lambda f: TokenType.STAR,
-            # We need lambda for these statements since they work as switch cases
-            '!': lambda f: TokenType.BANG_EQUAL if self.match('=') else TokenType.BANG,
-            '=': lambda f: TokenType.EQUAL_EQUAL if self.match('=') else TokenType.EQUAL,
-            '<': lambda f: TokenType.LESS_EQUAL if self.match('=') else TokenType.LESS,
-            '>': lambda f: TokenType.GREATER_EQUAL if self.match('=') else TokenType.GREATER,
+            '(': TokenType.LEFT_PAREN,
+            ')': TokenType.RIGHT_PAREN,
+            '{': TokenType.LEFT_BRACE,
+            '}': TokenType.RIGHT_BRACE,
+            ',': TokenType.COMMA,
+            '.': TokenType.DOT,
+            '-': TokenType.MINUS,
+            '+': TokenType.PLUS,
+            ';': TokenType.SEMICOLON,
+            '*': TokenType.STAR,
+            # Conditial Symbols in different contexnts
+            '!': TokenType.BANG_EQUAL if self.match('=') else TokenType.BANG,
+            '=': TokenType.EQUAL_EQUAL if self.match('=') else TokenType.EQUAL,
+            '<': TokenType.LESS_EQUAL if self.match('=') else TokenType.LESS,
+            '>': TokenType.GREATER_EQUAL if self.match('=') else TokenType.GREATER,
             # White Spaces
-            ' ': lambda f: None,
-            '\r': lambda f: None,
-            '\t': lambda f: None,
-            # New Line
-            '\n': lambda f: self.advanceLine(),
+            ' ': None,
+            '\r': None,
+            '\t': None,
         }
         self.keywords = {
             'and': TokenType.AND,
@@ -51,16 +49,30 @@ class Scanner:
             'while': TokenType.WHILE,
         }
 
+    def scanTokens(self):
+        while not self.isAtEnd():
+            self.start = self.current
+            self.scanToken()
+        self.tokens.append(Token(TokenType.EOF, '', None, self.line))
+        return self.tokens
+
     def scanToken(self):
         c = self.advance()
         if c in self.tokenStrings:
-            c = self.tokenStrings[c](c)
+            c = self.tokenStrings[c]
             if c is not None:
                 self.addToken(c)
         elif c.isdigit():
             self.number()
         elif c.isalpha() or c == "-":
             self.identifier()
+        elif c == "\n":
+            self.advanceLine()
+        elif c == "/":
+            self.slash()
+        elif c == "\"":
+            self.string()
+        # ERROR: Unexpected Error.
 
     def number(self):
         while self.peek().isdigit():
@@ -68,7 +80,7 @@ class Scanner:
 
         if self.peek() == '.' and self.peekNext().isdigit(self.peekNext()):
             self.advance()
-            while self.isdigit(self._peek()):
+            while self.isdigit(self.peek()):
                 self.advance()
         self.addToken(TokenType.NUMBER, float(self.source[self.start:self.current]))
 
@@ -80,6 +92,35 @@ class Scanner:
             self.addToken(TokenType.IDENTIFIER)
         else:
             self.addToken(self.keywords[text])
+
+    def slash(self):
+        if self.match('/'):
+            while (self.peek() != '\n') and not self.isAtEnd():
+                self.advance()
+        elif self.match('*'):
+            while not self.isAtEnd():
+                if self.match('\n'):
+                    self.line += 1
+                elif self.match('*') and self.match('/'):
+                    break
+                else:
+                    self.advance()
+        else:
+            self._add_token(TokenType.SLASH)
+
+
+    def string():
+        while (self.peek() != '"') and not self.isAtEnd():
+            if self.peek() == '\n':
+                self.line += 1
+            self.advance()
+
+        if self.isAtEnd():
+            #ERROR: Unterminated String
+            return None
+        self.advance()
+        value = self.source[self.start+1:self.current-1]
+        self.addToken(TokenType.STRING, value)
 
     def peek(self):
         if self.isAtEnd():
@@ -111,7 +152,6 @@ class Scanner:
             return False
         elif self.source[self.current] != expected:
             return False
-        else:
-            self.current += 1
-            return True
+        self.current += 1
+        return True
 
