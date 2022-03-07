@@ -154,4 +154,6 @@ class Scanner:
             return False
         self.current += 1
         return True
+# for i in Scanner("var a = 12").scanTokens():
+#     print(i)
 
