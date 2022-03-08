@@ -46,19 +46,57 @@ class Parser:
         return
 
     def function(self, kind):
-        return
+        name = self.consume("IDENTIFIER", "Expect " + kind + " name.")
+        self.consume("LEFT_PAREN", "Expect '(' after " + kind + " name.")
+        parameters = []
+        if not self.check("RIGHT_PAREN"):
+            start = True
+            while start or self.match("COMMA"):
+                start = False
+                if len(parameters) >= 255:
+                    self.error(self.peek(), "Can't have more than 255 parameters")
+                parameters.append(self.consume("IDENTIFIER", "Expect parameter name."))
+        self.consume("RIGHT_PAREN", "Expect ')' after parameters.")
+        self.consume("LEFT_BRACE", "Expect '{' before " + kind + " body.")
+        body = self.block()
+        #return Stmt.Function
 
     def block(self):
-        return
+        statements = []
+
+        while (not self.check("RIGHT_BRACE") and not self.isAtEnd()):
+            statements.append(self.declaration())
+        self.consume("RIGHT_BRACE", "Expect '}' after block.")
+        return statements
 
     def assignment(self):
-        return
+        expr = self.orOperator()
+        if self.match("EQUAL"):
+            equals = self.previous()
+            value = self.assignment()
+            if isinstance(expr, Expr.Variable):
+                name = expr.name
+                return Expr.Assign(name, value)
+            if isinstance(expr, Expr.Get):
+                return Expr.Set(expr.object, expr.name, value)
+            self.error(equals, "Invalid assignment target.")
+        return expr
 
     def orOperator(self):
-        return
+        expr = self.andOperator()
+        while self.match("OR"):
+            operator = self.previous()
+            right = self.andOperator()
+            expr = Expr.Logical(expr, operator, right)
+        return expr
 
     def andOperator(self):
-        return
+        expr = self.equality()
+        while self.match("AND"):
+            operator = self.previous()
+            right = self.equality()
+            expr = Expr.Logical(expr, operator, right)
+        return expr
 
     def equality(self):
         expr = self.comparison()
