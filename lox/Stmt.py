@@ -18,7 +18,7 @@ class Expression(Stmt):
 
 class Function(Stmt):
     def __init__(self, name, params, body):
-        assert isinstance(name, Token)
+        assert isinstance(name, Token.Token)
         assert isinstance(params, list)
         assert isinstance(body, list)
 
@@ -56,7 +56,7 @@ class Print(Stmt):
 
 class Return(Stmt):
     def __init__(self, keyword, value):
-        assert isinstance(keyword, Token)
+        assert isinstance(keyword, Token.Token)
         assert isinstance(value, Expr)
 
         self.keyword = keyword
@@ -68,7 +68,7 @@ class Return(Stmt):
 
 class Var(Stmt):
     def __init__(self, name, initializer):
-        assert isinstance(name, Token)
+        assert isinstance(name, Token.Token)
         assert isinstance(initializer, Expr)
 
         self.name = name

@@ -7,7 +7,7 @@ class Expr:
 
 class Assign(Expr):
     def __init__(self, name, value):
-        assert isinstance(name, Token)
+        assert isinstance(name, Token.Token)
         assert isinstance(value, Expr)
 
         self.name = name
@@ -31,7 +31,7 @@ class Chain(Expr):
 
 class Unary(Expr):
     def __init__(self, operator, right):
-        assert isinstance(operator, Token)
+        assert isinstance(operator, Token.Token)
         assert isinstance(right, Expr)
 
         self.operator = operator
@@ -44,7 +44,7 @@ class Unary(Expr):
 class Binary(Expr):
     def __init__(self, left, operator, right):
         assert isinstance(left, Expr)
-        assert isinstance(operator, Token)
+        assert isinstance(operator, Token.Token)
         assert isinstance(right, Expr)
 
         self.left = left
@@ -58,7 +58,7 @@ class Binary(Expr):
 class Logical(Expr):
     def __init__(self, left, operator, right):
         assert isinstance(left, Expr)
-        assert isinstance(operator, Token)
+        assert isinstance(operator, Token.Token)
         assert isinstance(right, Expr)
 
         self.left = left
@@ -91,7 +91,7 @@ class Literal(Expr):
 
 class Variable(Expr):
     def __init__(self, keyword):
-        assert isinstance(keyword, Token)
+        assert isinstance(keyword, Token.Token)
 
         self.keyword = keyword
 
@@ -102,7 +102,7 @@ class Variable(Expr):
 class Call(Expr):
     def __init__(self, callee, parent, arguments):
         assert isinstance(callee, Expr)
-        assert isinstance(parent, Token)
+        assert isinstance(parent, Token.Token)
         assert isinstance(arguments, list)
 
         self.callee = callee
