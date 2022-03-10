@@ -10,40 +10,117 @@ class Parser:
         self.tokenList = tokenList
 
     def parse(self):
-        return
+        statements = []
+        while not self.isAtEnd():
+            statements.append(self.declaration())
+        return statements
 
     def expression(self):
-        return
+        return self.assignment()
 
     def declaration(self):
-        return
+        try:
+            if self.match("CLASS"): return self.classDeclaration()
+            if self.match("FUN"): return self.function("function")
+            if self.match("VAR"): return self.varDeclaration()
+            return self.statement()
+        except Exception: # create ParseError?
+            self.synchronise()
+            return None
 
     def classDeclaration(self):
-        return
+        name = self.consume("IDENTIFIER", "Expect class name.")
+        superclass = None
+        if self.match("LESS"):
+            self.consume("IDENTIFIER", "Expect class name.")
+            superclass = self.previous() # as Expr.Variable
+        self.consume("LEFT_BRACE", "Expect '{' before class body.")
+        methods = []
+        while not self.check("RIGHT_BRACE") and not self.isAtEnd():
+            methods.append(self.function("method"))
+        self.consume("RIGHT_BRACE", "Expect '}' after class body.")
+        return name, superclass, methods # as statement
 
     def statement(self):
-        return
+        if self.match("FOR"): self.forStatement()
+        if self.match("IF"): self.ifStatement()
+        if self.match("PRINT"): self. printStatement()
+        if self.match("RETURN"): self.returnStatement()
+        if self.match("WHILE"): self.whileStatement()
+        if self.match("LEFT_BRACE"): self.block() # as statement
+        return self.expressionStatement()
 
     def forStatement(self):
-        return
+        self.consume("LEFT_PAREN", "Expect '(' after 'for'.")
+        initializer = None
+        if self.match("SEMICOLON"): initializer = None
+        elif self.match("VAR"): initializer = self.varDeclaration()
+        else: initializer = expressionStatement()
+        
+        condition = None
+        if not self.check("SEMICOLON"):
+            condition = self.expression()
+        self.consume("SEMICOLON", "Expect ';' after loop condition.")
+
+        increment = None
+        if not self.check("RIGHT_PAREN"):
+            increment = self.expression()
+        self.consume("RIGHT_PAREN", "Expect ')' after for clauses.")
+
+        body = self.statement()
+        if increment is not None:
+            body = [body, increment] # refer to line 165 in Parser.java, Need Statement Block
+        
+        if condition is None: condition = Expr.Literal(True)
+        body - (condition, body) # as statement
+
+        if initializer is not None:
+            body = [initializer, body] # as statement block
+        
+        return body
 
     def ifStatement(self):
-        return
+        self.consume("LEFT_PAREN", "Expect '(' after 'if'.")
+        condition = self.expression()
+        self.consume("RIGHT_PAREN", "Expect ')' after if condition.")
+        thenBranch = self.statement()
+        elseBranch = None
+        if self.match("ELSE"):
+            elseBranch = self.statement()
+        return condition, thenBranch, elseBranch # as statement
 
     def printStatement(self):
-        return
+        value = self.expression()
+        self.consume("SEMICOLON", "Expect ';' after value.")
+        return value # as statement
 
     def returnStatement(self):
-        return
+        keyword = self.previous()
+        value = None
+        if not self.check("SEMICOLON"):
+            value = self.expression()
+        self.consume("SEMICOLON", "Expect ';' after return value.")
+        return keyword, value # as statement
 
     def varDeclaration(self):
-        return
+        name = self.consume("IDENTIFIER", "Expect variable name.")
+        initializer = None
+        if self.match("EQUAL"):
+            initializer = self.expression()
+        self.consume("SEMICOLON", "Expect ';' after variable declaration.")
+        return name, initializer # as statement
 
     def whileStatement(self):
-        return
+        self.consume("LEFT_PAREN", "Expect '(' after 'while'.")
+        condition = self.expression()
+        self.consume("RIGHT_PAREN", "Expect ')' after condition.")
+        body = self.statement()
+        return condition, body # as statement
 
     def expressionStatement(self):
-        return
+        expr = self.expression()
+        self.consume("SEMICOLON", "Expect ';' after expression.")
+        return expr # as statement
 
     def function(self, kind):
         name = self.consume("IDENTIFIER", "Expect " + kind + " name.")
