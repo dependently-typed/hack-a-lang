@@ -59,4 +59,3 @@ with open(path, "w+") as file:
 path = "../lox/Stmt.py"
 with open(path, "w+") as file:
     defineStmt(file, "Stmt", base_desc["Stmt"])
-    # defineAst(file, "Expr", base_desc["Stmt"])
