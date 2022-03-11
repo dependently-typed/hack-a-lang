@@ -3,6 +3,7 @@ sys.path.insert(0, '../lox')
 
 import Scanner
 import Parser
+import Interpreter
 import Expr
 
 simpleBinaryFalse = """
@@ -30,21 +31,16 @@ print variable2;
 print variable3;
 """
 
-forStatment = """
-for (var a = 1; a < 10; a = a + 1) {
-  print a;
-}
-"""
+testCases = [simpleBinaryFalse, simpleBinaryTrue, variables]
 
-def parseInput(input: str) -> list:
+def interpretInput(input: str):
     scanner = Scanner.Scanner(input)
     tokenList = scanner.scanTokens()
     parser = Parser.Parser(tokenList)
-    return parser.parse()
+    statements = parser.parse()
+    interpreter = Interpreter.Interpreter()
+    value = interpreter.interpret(statements)
 
-testCases = [simpleBinaryFalse, simpleBinaryTrue, variables, forStatement]
 for testCase in testCases:
-    statements = parseInput(testCase)
-    for statement in statements:
-        print(statement)
-
+    value = interpretInput(testCase)
+    print(value) # print None if no return value
