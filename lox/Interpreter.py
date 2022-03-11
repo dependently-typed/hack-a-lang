@@ -117,7 +117,7 @@ class Interpreter:
         return None
 
 
-    def  visitBlock(self, stmt):
+    def visitBlock(self, stmt):
         self.executeBlock(stmt.statements, Environment.Environment(self.environment));
         return None
 
@@ -130,4 +130,6 @@ class Interpreter:
         finally:
             self.environment = previous
 
-
+    def visitPrint(self, stmt):
+        value = self.evaluate(stmt.expression)
+        print(str(value))

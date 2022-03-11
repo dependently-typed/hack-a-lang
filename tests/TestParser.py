@@ -8,9 +8,9 @@ import Expr
 
 simpleBinary = """
 if (1 != 1) {
-  1 == 1;
+  print "true";
 } else {
-  1 == 2;
+  print "false";
 }
 """
 scanner = Scanner.Scanner(simpleBinary)
@@ -20,6 +20,6 @@ tokenList = scanner.scanTokens()
 parser = Parser.Parser(tokenList)
 statements = parser.parse()
 Interpreter = Interpreter.Interpreter()
-print(Interpreter.interpret(statements))
+Interpreter.interpret(statements)
 
 
