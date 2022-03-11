@@ -1,6 +1,5 @@
 from LoxCallable import LoxCallable
 
-# TODO finish class
 class LoxFunction(LoxCallable):
     def __init__(self, declaration, closure, isInitializer):
         self.isInitializer = isInitializer
@@ -8,7 +7,14 @@ class LoxFunction(LoxCallable):
         self.declaration = declaration
 
     def __str__(self):
-        return "<fn " + self.declaration.name.lexeme + ">"
+        return "<fn " + declaration.name.lexeme + ">"
 
     def arity(self):
-        return len(self.declaration.params)
+        return len(declaration.params)
+
+    def call(self, interpreter, arguements):
+        environment = Environment.Environment(self.closure)
+        for i in range(len(declaration.params)):
+            environment.define(declaration.params[i].lexeme, arguements[i])
+
+        interpreter.executeBlock(declaration.body, environment);

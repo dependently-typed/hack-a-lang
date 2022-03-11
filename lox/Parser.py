@@ -61,6 +61,7 @@ class Parser:
         return expr
 
     def forStatement(self):
+        print("for")
         self.consume(TokenType.LEFT_PAREN, "Expect '(' after 'for'.")
         initializer = None
         if self.match(TokenType.SEMICOLON): initializer = None

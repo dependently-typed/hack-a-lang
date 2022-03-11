@@ -7,10 +7,8 @@ import Interpreter
 import Expr
 
 simpleBinary = """
-if (1 != 1) {
-  print "true";
-} else {
-  print "false";
+for (var a = 1; a < 10; a = a + 1) {
+  print a;
 }
 """
 scanner = Scanner.Scanner(simpleBinary)
@@ -19,6 +17,8 @@ tokenList = scanner.scanTokens()
 #     print(i)
 parser = Parser.Parser(tokenList)
 statements = parser.parse()
+for i in statements:
+  print(i)
 Interpreter = Interpreter.Interpreter()
 Interpreter.interpret(statements)
 
