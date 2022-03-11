@@ -16,6 +16,21 @@ if (1 != 1) {
 }
 """
 
+variables = """
+var variable1 = 2;
+var variable2 = 1 + 2;
+var variable3 = variable1 + variable2;
+print variable1;
+print variable2;
+print variable3;
+"""
+
+forStatement = """
+for (var a = 1; a < 10; a = a + 1) {
+  print a;
+}
+"""
+
 expression = Expr.Binary(
     Expr.Unary(
         Token.Token(TokenType.MINUS, "-", None, 1), Expr.Literal(123)),
@@ -32,7 +47,8 @@ def parseInput(input: str) -> list:
 
 
 # print(Token.Token(TokenType.MINUS, "-", None, 1))
-print(AstPrinter().printast(expression))
-statements = parseInput(simpleBinaryFalse)
+# print(AstPrinter().printast(expression))
+
+statements = parseInput(forStatement)
 for statement in statements:
     print(AstPrinter().printast(statement))

@@ -11,7 +11,7 @@ class AstPrinter:
     def visitBlock(self, stmt):
         string = "(block "
         for statement in stmt.statements:
-            string += statement.accept(self)
+            string += str(statement.accept(self))
         string += ")"
         return string
 
@@ -89,8 +89,8 @@ class AstPrinter:
         Parenthesize Expressions, Statements, Lists, or Tokens
         TODO: Not completely working, parts to transform is passing all arguments as one.
         '''
-        string = "(" + name
-        self.transform(string, parts)
+        string = ""
+        string += self.transform("(" + name, *parts)
         string += ")"
         return string
     
@@ -107,3 +107,4 @@ class AstPrinter:
                 string += part.lexeme
             else:
                 string += str(part) # don't think we need extra list to array as in Java because python list
+        return string

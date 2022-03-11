@@ -30,7 +30,7 @@ print variable2;
 print variable3;
 """
 
-forStatment = """
+forStatement = """
 for (var a = 1; a < 10; a = a + 1) {
   print a;
 }
@@ -42,7 +42,8 @@ def parseInput(input: str) -> list:
     parser = Parser.Parser(tokenList)
     return parser.parse()
 
-testCases = [simpleBinaryFalse, simpleBinaryTrue, variables, forStatement]
+testCases = [forStatement] #simpleBinaryFalse, simpleBinaryTrue, variables, forStatement]
+
 for testCase in testCases:
     statements = parseInput(testCase)
     for statement in statements:
