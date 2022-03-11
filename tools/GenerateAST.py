@@ -54,7 +54,7 @@ def defineType(file, baseName, className, fields):
     file.writelines(instances)
     file.write("\n")
     file.writelines([tab + "def accept(self, visitor):\n", tab + tab + "return visitor.visit" + className + "(self)\n\n"])
-    file.writelines([tab + "def __str__(self):\n", tab + tab + "return" + printString + "\n\n"])
+    file.writelines([tab + "def __str__(self):\n", tab + tab + "return " + printString + "\n\n"])
 
 
 path = "../lox/Expr.py"
