@@ -30,16 +30,21 @@ print variable2;
 print variable3;
 """
 
+forStatment = """
+for (var a = 1; a < 10; a = a + 1) {
+  print a;
+}
+"""
+
 def parseInput(input: str) -> list:
     scanner = Scanner.Scanner(input)
     tokenList = scanner.scanTokens()
     parser = Parser.Parser(tokenList)
     return parser.parse()
 
-testCases = [simpleBinaryFalse, simpleBinaryTrue, variables]
+testCases = [simpleBinaryFalse, simpleBinaryTrue, variables, forStatement]
 for testCase in testCases:
     statements = parseInput(testCase)
     for statement in statements:
         print(statement)
-
 
