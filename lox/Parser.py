@@ -78,9 +78,16 @@ class Parser:
 
         body = self.statement()
         if increment is not None:
-            body = Stmt.Block([body, Stmt.Expression(increment)])
+            bodyList = [body]
+            incrementExpression = Stmt.Expression(increment)
+            print(incrementExpression)
+            bodyList.append(incrementExpression)
+            print(bodyList)
+            body = Stmt.Block(bodyList)
+            print(body)
 
-        if condition is None: condition = Expr.Literal(True)
+        if condition is None:
+            condition = Expr.Literal(True)
         body = Stmt.While(condition, body)
 
         if initializer is not None:

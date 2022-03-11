@@ -84,7 +84,7 @@ class Interpreter:
         if distance is not None:
             self.environment.assignAt(distance, expr.name, value)
         else:
-            self.globals[expr.name] = value
+            self.globals.assign(expr.name, value)
         return value
 
     def visitBinary(self, expr):
@@ -191,11 +191,11 @@ class Interpreter:
         return self.lookUpVariable(expr.name, expr)
 
     def lookUpVariable(self, name, expr):
-        distance = self.locals[expr]
+        distance = self.locals.get(expr)
         if distance is not None:
             return self.environment.getAt(distance, name.lexeme)
         else:
-            return self.globals[name]
+            return self.globals.get(name)
 
     def checkNumberOperand(self, operator, operand):
         if not isinstance(operand, float):
