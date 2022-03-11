@@ -10,25 +10,25 @@ class Scanner:
         self.line = 1
         self.tokenStrings = {
             # Paranthesis and Symbols
-            '(': TokenType.LEFT_PAREN,
-            ')': TokenType.RIGHT_PAREN,
-            '{': TokenType.LEFT_BRACE,
-            '}': TokenType.RIGHT_BRACE,
-            ',': TokenType.COMMA,
-            '.': TokenType.DOT,
-            '-': TokenType.MINUS,
-            '+': TokenType.PLUS,
-            ';': TokenType.SEMICOLON,
-            '*': TokenType.STAR,
+            '(': lambda c: TokenType.LEFT_PAREN,
+            ')': lambda c: TokenType.RIGHT_PAREN,
+            '{': lambda c: TokenType.LEFT_BRACE,
+            '}': lambda c: TokenType.RIGHT_BRACE,
+            ',': lambda c: TokenType.COMMA,
+            '.': lambda c: TokenType.DOT,
+            '-': lambda c: TokenType.MINUS,
+            '+': lambda c: TokenType.PLUS,
+            ';': lambda c: TokenType.SEMICOLON,
+            '*': lambda c: TokenType.STAR,
             # Conditial Symbols in different contexnts
-            '!': TokenType.BANG_EQUAL if self.match('=') else TokenType.BANG,
-            '=': TokenType.EQUAL_EQUAL if self.match('=') else TokenType.EQUAL,
-            '<': TokenType.LESS_EQUAL if self.match('=') else TokenType.LESS,
-            '>': TokenType.GREATER_EQUAL if self.match('=') else TokenType.GREATER,
+            '!': lambda c: TokenType.BANG_EQUAL if self.match('=') else TokenType.BANG,
+            '=': lambda c: TokenType.EQUAL_EQUAL if self.match('=') else TokenType.EQUAL,
+            '<': lambda c: TokenType.LESS_EQUAL if self.match('=') else TokenType.LESS,
+            '>': lambda c: TokenType.GREATER_EQUAL if self.match('=') else TokenType.GREATER,
             # White Spaces
-            ' ': None,
-            '\r': None,
-            '\t': None,
+            ' ': lambda c: None,
+            '\r': lambda c: None,
+            '\t': lambda c: None,
         }
         self.keywords = {
             'and': TokenType.AND,
@@ -59,7 +59,7 @@ class Scanner:
     def scanToken(self):
         c = self.advance()
         if c in self.tokenStrings:
-            c = self.tokenStrings[c]
+            c = self.tokenStrings[c](c)
             if c is not None:
                 self.addToken(c)
         elif c.isdigit():
@@ -148,9 +148,18 @@ class Scanner:
 
 
     def match(self, expected):
+        print(expected, self.source[self.current])
         if self.isAtEnd():
             return False
         elif self.source[self.current] != expected:
+            return False
+        self.current += 1
+        return True
+
+    def matchNext(self, expected):
+        if self.isAtEnd():
+            return False
+        elif self.source[self.current+1] != expected:
             return False
         self.current += 1
         return True

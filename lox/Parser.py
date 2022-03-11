@@ -122,6 +122,7 @@ class Parser:
 
     def expressionStatement(self):
         expr = self.expression()
+
         self.consume(TokenType.SEMICOLON, "Expect ';' after expression.")
         statement = Stmt.Expression(expr)
         return statement
@@ -180,7 +181,6 @@ class Parser:
 
     def equality(self):
         expr = self.comparison()
-
         while self.match(TokenType.BANG_EQUAL, TokenType.EQUAL_EQUAL):
             operator = self.previous()
             right = self.comparison()
@@ -190,7 +190,6 @@ class Parser:
 
     def comparison(self):
         expr = self.term()
-
         while self.match(TokenType.GREATER, TokenType.GREATER_EQUAL, TokenType.LESS, TokenType.LESS_EQUAL):
             operator = self.previous()
             right = self.term()

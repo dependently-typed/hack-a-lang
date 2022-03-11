@@ -6,9 +6,11 @@ import Parser
 import Interpreter
 import Expr
 
-simpleBinary = "1 + 2/3;"
+simpleBinary = "3 == 2;"
 scanner = Scanner.Scanner(simpleBinary)
 tokenList = scanner.scanTokens()
+for i in tokenList:
+    print(i)
 parser = Parser.Parser(tokenList)
 statements = parser.parse()
 print(statements)
