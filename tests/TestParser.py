@@ -10,6 +10,7 @@ scanner = Scanner.Scanner(simpleBinary)
 tokenList = scanner.scanTokens()
 parser = Parser.Parser(tokenList)
 statements = parser.parse()
+print(statements)
 for statement in statements:
     print(statement)
 
