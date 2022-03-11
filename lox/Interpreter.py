@@ -16,7 +16,6 @@ class Interpreter:
     def interpret(self, statements):
         try:
             for statement in statements:
-                print(statement)
                 value = self.execute(statement)
             return value
         except RuntimeError as error:
