@@ -8,7 +8,7 @@ class Stmt:
 
 class Expression(Stmt):
     def __init__(self, expression):
-        assert isinstance(expression, Expr)
+        assert isinstance(expression, Expr.Expr)
 
         self.expression = expression
 
@@ -38,7 +38,7 @@ class Function(Stmt):
 
 class If(Stmt):
     def __init__(self, condition, thenBranch, elseBranch):
-        assert isinstance(condition, Expr)
+        assert isinstance(condition, Expr.Expr)
         assert isinstance(thenBranch, Stmt)
         assert isinstance(elseBranch, Stmt)
 
@@ -55,7 +55,7 @@ class If(Stmt):
 
 class Print(Stmt):
     def __init__(self, expression):
-        assert isinstance(expression, Expr)
+        assert isinstance(expression, Expr.Expr)
 
         self.expression = expression
 
@@ -69,7 +69,7 @@ class Print(Stmt):
 class Return(Stmt):
     def __init__(self, keyword, value):
         assert isinstance(keyword, Token.Token)
-        assert isinstance(value, Expr)
+        assert isinstance(value, Expr.Expr)
 
         self.keyword = keyword
         self.value = value
@@ -84,7 +84,7 @@ class Return(Stmt):
 class Var(Stmt):
     def __init__(self, name, initializer):
         assert isinstance(name, Token.Token)
-        assert isinstance(initializer, Expr)
+        assert isinstance(initializer, Expr.Expr)
 
         self.name = name
         self.initializer = initializer
@@ -98,7 +98,7 @@ class Var(Stmt):
 
 class While(Stmt):
     def __init__(self, condition, body):
-        assert isinstance(condition, Expr)
+        assert isinstance(condition, Expr.Expr)
         assert isinstance(body, Stmt)
 
         self.condition = condition
