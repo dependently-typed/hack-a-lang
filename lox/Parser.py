@@ -1,8 +1,8 @@
 import Expr
 import Scanner
-import TokenType
 import Expr
 import Stmt
+from TokenType import TokenType
 
 
 class Parser:
@@ -10,7 +10,7 @@ class Parser:
         self.current = 0
         self.tokenList = tokenList
 
-    def parse(self):
+    def parse(self) -> list:
         statements = []
         while not self.isAtEnd():
             statements.append(self.declaration())
@@ -43,12 +43,12 @@ class Parser:
         return name, superclass, methods # as statement Class
 
     def statement(self):
-        if self.match("FOR"): self.forStatement()
-        if self.match("IF"): self.ifStatement()
-        if self.match("PRINT"): self. printStatement()
-        if self.match("RETURN"): self.returnStatement()
-        if self.match("WHILE"): self.whileStatement()
-        if self.match("LEFT_BRACE"): Stmt.Block(self.block())
+        if self.match("FOR"): return self.forStatement()
+        if self.match("IF"): return self.ifStatement()
+        if self.match("PRINT"): return self. printStatement()
+        if self.match("RETURN"): return self.returnStatement()
+        if self.match("WHILE"): return self.whileStatement()
+        if self.match("LEFT_BRACE"): return Stmt.Block(self.block())
         return self.expressionStatement()
 
     def forStatement(self):
@@ -278,10 +278,10 @@ class Parser:
     def check(self, tokenType):
         if self.isAtEnd():
             return False
-        return self.peek()._type == tokenType
+        return self.peek().type == tokenType
 
     def isAtEnd(self):
-        return self.peek()._type == TokenType.EOF
+        return self.peek().type == TokenType.EOF
 
     def peek(self):
         return self.tokenList[self.current]
