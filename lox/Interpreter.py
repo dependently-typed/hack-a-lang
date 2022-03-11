@@ -5,7 +5,7 @@ class Interpreter:
     def __init__(self):
         # globals = Environment.Environment()
         # environment = globals
-        locals = {}
+        locals = dict()
 
     def interpret(self, expression):
         value = self.evaluate(expression)
@@ -20,6 +20,39 @@ class Interpreter:
 
     def visitExpression(self, stmt):
         return self.evaluate(stmt.expression)
+
+
+    def visitUnary(self, expr):
+        right = self.evaluate(expr.right)
+        operatorType = expr.operator.type
+
+        if operatorType is TokenType.MINUS:
+            return -float(right)
+
+        elif operatorType is TokenType.BANG :
+            return not self.isTrue(right)
+
+        return None
+
+    def isTrue(self,boolean):
+        if boolean is None:
+            return False
+        elif isinstance(boolean, bool):
+            return bool(boolean)
+        else:
+            return True
+
+
+    def visitLogical(self, expr):
+        left = self.evaluate(expr.left)
+        if (expr.operator.type is TokenType.OR):
+            if self.isTrue(left):
+                return left
+        else:
+            if not self.isTrue(left):
+                return left
+
+        return self.evaluate(expr.right)
 
     def visitBinary(self, expr):
         left = self.evaluate(expr.left)

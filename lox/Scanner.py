@@ -109,7 +109,7 @@ class Scanner:
             self.addToken(TokenType.SLASH)
 
 
-    def string():
+    def string(self):
         while (self.peek() != '"') and not self.isAtEnd():
             if self.peek() == '\n':
                 self.line += 1
@@ -148,7 +148,6 @@ class Scanner:
 
 
     def match(self, expected):
-        print(expected, self.source[self.current])
         if self.isAtEnd():
             return False
         elif self.source[self.current] != expected:
