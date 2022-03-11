@@ -13,3 +13,4 @@ class LoxFunction(LoxCallable):
     def arity(self):
         return len(declaration.params)
 
+

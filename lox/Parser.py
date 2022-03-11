@@ -205,7 +205,6 @@ class Parser:
             operator = self.previous()
             right = self.factor()
             expr = Expr.Binary(expr, operator, right)
-
         return expr
 
     def factor(self):

@@ -16,7 +16,7 @@ class Expression(Stmt):
         return visitor.visitExpression(self)
 
     def __str__(self):
-        returnstr(self.expression)
+        return str(self.expression)
 
 
 class Function(Stmt):
@@ -33,7 +33,7 @@ class Function(Stmt):
         return visitor.visitFunction(self)
 
     def __str__(self):
-        returnstr(self.name) + " " + str(self.params) + " " + str(self.body)
+        return str(self.name) + " " + str(self.params) + " " + str(self.body)
 
 
 class If(Stmt):
@@ -50,7 +50,7 @@ class If(Stmt):
         return visitor.visitIf(self)
 
     def __str__(self):
-        returnstr(self.condition) + " " + str(self.thenBranch) + " " + str(self.elseBranch)
+        return str(self.condition) + " " + str(self.thenBranch) + " " + str(self.elseBranch)
 
 
 class Print(Stmt):
@@ -63,7 +63,7 @@ class Print(Stmt):
         return visitor.visitPrint(self)
 
     def __str__(self):
-        returnstr(self.expression)
+        return str(self.expression)
 
 
 class Return(Stmt):
@@ -78,7 +78,7 @@ class Return(Stmt):
         return visitor.visitReturn(self)
 
     def __str__(self):
-        returnstr(self.keyword) + " " + str(self.value)
+        return str(self.keyword) + " " + str(self.value)
 
 
 class Var(Stmt):
@@ -93,7 +93,7 @@ class Var(Stmt):
         return visitor.visitVar(self)
 
     def __str__(self):
-        returnstr(self.name) + " " + str(self.initializer)
+        return str(self.name) + " " + str(self.initializer)
 
 
 class While(Stmt):
@@ -108,5 +108,5 @@ class While(Stmt):
         return visitor.visitWhile(self)
 
     def __str__(self):
-        returnstr(self.condition) + " " + str(self.body)
+        return str(self.condition) + " " + str(self.body)
 

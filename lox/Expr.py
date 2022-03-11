@@ -17,7 +17,7 @@ class Assign(Expr):
         return visitor.visitAssign(self)
 
     def __str__(self):
-        returnstr(self.name) + " " + str(self.value)
+        return str(self.name) + " " + str(self.value)
 
 
 class Chain(Expr):
@@ -32,7 +32,7 @@ class Chain(Expr):
         return visitor.visitChain(self)
 
     def __str__(self):
-        returnstr(self.left) + " " + str(self.right)
+        return str(self.left) + " " + str(self.right)
 
 
 class Unary(Expr):
@@ -47,7 +47,7 @@ class Unary(Expr):
         return visitor.visitUnary(self)
 
     def __str__(self):
-        returnstr(self.operator) + " " + str(self.right)
+        return str(self.operator) + " " + str(self.right)
 
 
 class Binary(Expr):
@@ -64,7 +64,7 @@ class Binary(Expr):
         return visitor.visitBinary(self)
 
     def __str__(self):
-        returnstr(self.left) + " " + str(self.operator) + " " + str(self.right)
+        return str(self.left) + " " + str(self.operator) + " " + str(self.right)
 
 
 class Logical(Expr):
@@ -81,7 +81,7 @@ class Logical(Expr):
         return visitor.visitLogical(self)
 
     def __str__(self):
-        returnstr(self.left) + " " + str(self.operator) + " " + str(self.right)
+        return str(self.left) + " " + str(self.operator) + " " + str(self.right)
 
 
 class Grouping(Expr):
@@ -94,7 +94,7 @@ class Grouping(Expr):
         return visitor.visitGrouping(self)
 
     def __str__(self):
-        returnstr(self.expression)
+        return str(self.expression)
 
 
 class Literal(Expr):
@@ -107,7 +107,7 @@ class Literal(Expr):
         return visitor.visitLiteral(self)
 
     def __str__(self):
-        returnstr(self.value)
+        return str(self.value)
 
 
 class Variable(Expr):
@@ -120,7 +120,7 @@ class Variable(Expr):
         return visitor.visitVariable(self)
 
     def __str__(self):
-        returnstr(self.keyword)
+        return str(self.keyword)
 
 
 class Call(Expr):
@@ -137,5 +137,5 @@ class Call(Expr):
         return visitor.visitCall(self)
 
     def __str__(self):
-        returnstr(self.callee) + " " + str(self.parent) + " " + str(self.arguments)
+        return str(self.callee) + " " + str(self.parent) + " " + str(self.arguments)
 
