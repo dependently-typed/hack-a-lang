@@ -75,7 +75,7 @@ class Interpreter:
         self.environment.define(stmt.name.lexeme, value)
 
     def visitWhile(self, stmt):
-        while self.isTrue(stmt.condition):
+        while self.isTrue(self.evaluate(stmt.condition)):
             self.execute(stmt.body)
 
     def visitAssign(self, expr):
@@ -191,7 +191,7 @@ class Interpreter:
         return self.lookUpVariable(expr.name, expr)
 
     def lookUpVariable(self, name, expr):
-        distance = self.locals.get(expr)
+        distance = self.locals.get(expr, None)
         if distance is not None:
             return self.environment.getAt(distance, name.lexeme)
         else:
