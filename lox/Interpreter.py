@@ -16,7 +16,6 @@ class Interpreter:
     def interpret(self, statements):
         try:
             for statement in statements:
-                print(statement)
                 value = self.execute(statement)
             return value
         except RuntimeError as error:
@@ -192,11 +191,11 @@ class Interpreter:
         return self.lookUpVariable(expr.name, expr)
 
     def lookUpVariable(self, name, expr):
-        distance = locals[expr]
+        distance = self.locals[expr]
         if distance is not None:
             return self.environment.getAt(distance, name.lexeme)
         else:
-            return globals[name]
+            return self.globals[name]
 
     def checkNumberOperand(self, operator, operand):
         if not isinstance(operand, float):

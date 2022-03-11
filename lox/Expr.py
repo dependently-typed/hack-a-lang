@@ -111,16 +111,16 @@ class Literal(Expr):
 
 
 class Variable(Expr):
-    def __init__(self, keyword):
-        assert isinstance(keyword, Token.Token)
+    def __init__(self, name):
+        assert isinstance(name, Token.Token)
 
-        self.keyword = keyword
+        self.name = name
 
     def accept(self, visitor):
         return visitor.visitVariable(self)
 
     def __str__(self):
-        return str(self.keyword)
+        return str(self.name)
 
 
 class Call(Expr):
