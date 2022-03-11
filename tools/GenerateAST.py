@@ -15,14 +15,14 @@ base_desc = {
         "Call" : [["Expr","callee"], ["Token.Token", "parent"], ["list","arguments"]]
     },
     "Stmt": {
-        "Expression" : [["Expr", "expression"]],
+        "Expression" : [["Expr.Expr", "expression"]],
         "Function" : [["Token.Token", "name"], ["list", "params"],["list", "body"]],
-        "Expression" : [["Expr", "expression"]],
-        "If": [["Expr", "condition"], ["Stmt", "thenBranch"],["Stmt", "elseBranch"]],
-        "Print" : [["Expr","expression"]],
-        "Return" : [["Token.Token","keyword"], ["Expr","value"]],
-        "Var" : [["Token.Token", "name"], ["Expr", "initializer"]],
-        "While" : [["Expr","condition"], ["Stmt", "body"]]
+        "Expression" : [["Expr.Expr", "expression"]],
+        "If": [["Expr.Expr", "condition"], ["Stmt", "thenBranch"],["Stmt", "elseBranch"]],
+        "Print" : [["Expr.Expr","expression"]],
+        "Return" : [["Token.Token","keyword"], ["Expr.Expr","value"]],
+        "Var" : [["Token.Token", "name"], ["Expr.Expr", "initializer"]],
+        "While" : [["Expr.Expr","condition"], ["Stmt", "body"]]
     }
 }
 
