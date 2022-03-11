@@ -31,7 +31,13 @@ print variable2;
 print variable3;
 """
 
-testCases = [simpleBinaryFalse, simpleBinaryTrue, variables]
+forStatement = """
+for (var a = 1; a < 10; a = a + 1) {
+  print a;
+}
+"""
+
+testCases = [simpleBinaryFalse, simpleBinaryTrue, variables, forStatement]
 
 def interpretInput(input: str):
     scanner = Scanner.Scanner(input)
