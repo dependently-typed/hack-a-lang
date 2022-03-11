@@ -34,13 +34,13 @@ class Parser:
         superclass = None
         if self.match("LESS"):
             self.consume("IDENTIFIER", "Expect class name.")
-            superclass = self.previous() # as Expr.Variable
+            superclass = Expr.Variable(self.previous())
         self.consume("LEFT_BRACE", "Expect '{' before class body.")
         methods = []
         while not self.check("RIGHT_BRACE") and not self.isAtEnd():
             methods.append(self.function("method"))
         self.consume("RIGHT_BRACE", "Expect '}' after class body.")
-        return name, superclass, methods # as statement
+        return name, superclass, methods # as statement Class
 
     def statement(self):
         if self.match("FOR"): self.forStatement()
@@ -48,7 +48,7 @@ class Parser:
         if self.match("PRINT"): self. printStatement()
         if self.match("RETURN"): self.returnStatement()
         if self.match("WHILE"): self.whileStatement()
-        if self.match("LEFT_BRACE"): self.block() # as statement
+        if self.match("LEFT_BRACE"): Stmt.Block(self.block())
         return self.expressionStatement()
 
     def forStatement(self):
@@ -70,13 +70,13 @@ class Parser:
 
         body = self.statement()
         if increment is not None:
-            body = [body, increment] # refer to line 165 in Parser.java, Need Statement Block
+            body = Stmt.Block([body, Stmt.Expression(increment)])
 
         if condition is None: condition = Expr.Literal(True)
-        body - (condition, body) # as statement
+        body = Stmt.While(condition, body)
 
         if initializer is not None:
-            body = [initializer, body] # as statement block
+            body = Stmt.Block([initializer, body])
 
         return body
 
@@ -88,12 +88,12 @@ class Parser:
         elseBranch = None
         if self.match("ELSE"):
             elseBranch = self.statement()
-        return condition, thenBranch, elseBranch # as statement
+        return Stmt.If(condition, thenBranch, elseBranch)
 
     def printStatement(self):
         value = self.expression()
         self.consume("SEMICOLON", "Expect ';' after value.")
-        return value # as statement
+        return Stmt.Print(value)
 
     def returnStatement(self):
         keyword = self.previous()
@@ -101,7 +101,7 @@ class Parser:
         if not self.check("SEMICOLON"):
             value = self.expression()
         self.consume("SEMICOLON", "Expect ';' after return value.")
-        return keyword, value # as statement
+        return Stmt.Return(keyword, value)
 
     def varDeclaration(self):
         name = self.consume("IDENTIFIER", "Expect variable name.")
@@ -109,19 +109,19 @@ class Parser:
         if self.match("EQUAL"):
             initializer = self.expression()
         self.consume("SEMICOLON", "Expect ';' after variable declaration.")
-        return name, initializer # as statement
+        return Stmt.Var(name, initializer)
 
     def whileStatement(self):
         self.consume("LEFT_PAREN", "Expect '(' after 'while'.")
         condition = self.expression()
         self.consume("RIGHT_PAREN", "Expect ')' after condition.")
         body = self.statement()
-        return condition, body # as statement
+        return Stmt.While(condition, body)
 
     def expressionStatement(self):
         expr = self.expression()
         self.consume("SEMICOLON", "Expect ';' after expression.")
-        return expr # as statement
+        return Stmt.Expression(expr)
 
     def function(self, kind):
         name = self.consume("IDENTIFIER", "Expect " + kind + " name.")
@@ -137,11 +137,10 @@ class Parser:
         self.consume("RIGHT_PAREN", "Expect ')' after parameters.")
         self.consume("LEFT_BRACE", "Expect '{' before " + kind + " body.")
         body = self.block()
-        #return Stmt.Function
+        return Stmt.Function(name, parameters, body)
 
     def block(self):
         statements = []
-
         while (not self.check("RIGHT_BRACE") and not self.isAtEnd()):
             statements.append(self.declaration())
         self.consume("RIGHT_BRACE", "Expect '}' after block.")

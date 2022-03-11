@@ -5,6 +5,15 @@ import Expr
 class Stmt:
     pass
 
+class Block(Stmt):
+    def __init__(self, statements):
+        assert isinstance(statements, list)
+
+        self.statement = statements
+    
+    def accept(self, visitor):
+        return visitor.visitBlockStmt(self)
+
 
 class Expression(Stmt):
     def __init__(self, expression):
