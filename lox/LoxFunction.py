@@ -1,6 +1,6 @@
-class LoxCallable:
-    pass
+from LoxCallable import LoxCallable
 
+# TODO finish class
 class LoxFunction(LoxCallable):
     def __init__(self, declaration, closure, isInitializer):
         self.isInitializer = isInitializer
@@ -8,9 +8,7 @@ class LoxFunction(LoxCallable):
         self.declaration = declaration
 
     def __str__(self):
-        return "<fn " + declaration.name.lexeme + ">"
+        return "<fn " + self.declaration.name.lexeme + ">"
 
     def arity(self):
-        return len(declaration.params)
-
-
+        return len(self.declaration.params)
