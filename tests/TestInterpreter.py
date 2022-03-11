@@ -32,7 +32,7 @@ print variable3;
 """
 
 forStatement = """
-for (var a = 1; a < 10; a = a + 1) {
+for (var a = 0; a < 10; a = a + 1) {
   print a;
 }
 """
