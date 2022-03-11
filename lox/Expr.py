@@ -16,6 +16,9 @@ class Assign(Expr):
     def accept(self, visitor):
         return visitor.visitAssign(self)
 
+    def __str__(self):
+        returnstr(self.name) + " " + str(self.value)
+
 
 class Chain(Expr):
     def __init__(self, left, right):
@@ -28,6 +31,9 @@ class Chain(Expr):
     def accept(self, visitor):
         return visitor.visitChain(self)
 
+    def __str__(self):
+        returnstr(self.left) + " " + str(self.right)
+
 
 class Unary(Expr):
     def __init__(self, operator, right):
@@ -39,6 +45,9 @@ class Unary(Expr):
 
     def accept(self, visitor):
         return visitor.visitUnary(self)
+
+    def __str__(self):
+        returnstr(self.operator) + " " + str(self.right)
 
 
 class Binary(Expr):
@@ -54,6 +63,9 @@ class Binary(Expr):
     def accept(self, visitor):
         return visitor.visitBinary(self)
 
+    def __str__(self):
+        returnstr(self.left) + " " + str(self.operator) + " " + str(self.right)
+
 
 class Logical(Expr):
     def __init__(self, left, operator, right):
@@ -68,6 +80,9 @@ class Logical(Expr):
     def accept(self, visitor):
         return visitor.visitLogical(self)
 
+    def __str__(self):
+        returnstr(self.left) + " " + str(self.operator) + " " + str(self.right)
+
 
 class Grouping(Expr):
     def __init__(self, expression):
@@ -77,6 +92,9 @@ class Grouping(Expr):
 
     def accept(self, visitor):
         return visitor.visitGrouping(self)
+
+    def __str__(self):
+        returnstr(self.expression)
 
 
 class Literal(Expr):
@@ -88,6 +106,9 @@ class Literal(Expr):
     def accept(self, visitor):
         return visitor.visitLiteral(self)
 
+    def __str__(self):
+        returnstr(self.value)
+
 
 class Variable(Expr):
     def __init__(self, keyword):
@@ -97,6 +118,9 @@ class Variable(Expr):
 
     def accept(self, visitor):
         return visitor.visitVariable(self)
+
+    def __str__(self):
+        returnstr(self.keyword)
 
 
 class Call(Expr):
@@ -111,4 +135,7 @@ class Call(Expr):
 
     def accept(self, visitor):
         return visitor.visitCall(self)
+
+    def __str__(self):
+        returnstr(self.callee) + " " + str(self.parent) + " " + str(self.arguments)
 

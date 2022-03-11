@@ -5,24 +5,18 @@ import Expr
 class Stmt:
     pass
 
-class Block(Stmt):
-    def __init__(self, statements):
-        assert isinstance(statements, list)
-
-        self.statement = statements
-    
-    def accept(self, visitor):
-        return visitor.visitBlockStmt(self)
-
 
 class Expression(Stmt):
     def __init__(self, expression):
-        assert isinstance(expression, Expr.Expr)
+        assert isinstance(expression, Expr)
 
         self.expression = expression
 
     def accept(self, visitor):
         return visitor.visitExpression(self)
+
+    def __str__(self):
+        returnstr(self.expression)
 
 
 class Function(Stmt):
@@ -38,10 +32,13 @@ class Function(Stmt):
     def accept(self, visitor):
         return visitor.visitFunction(self)
 
+    def __str__(self):
+        returnstr(self.name) + " " + str(self.params) + " " + str(self.body)
+
 
 class If(Stmt):
     def __init__(self, condition, thenBranch, elseBranch):
-        assert isinstance(condition, Expr.Expr)
+        assert isinstance(condition, Expr)
         assert isinstance(thenBranch, Stmt)
         assert isinstance(elseBranch, Stmt)
 
@@ -52,21 +49,27 @@ class If(Stmt):
     def accept(self, visitor):
         return visitor.visitIf(self)
 
+    def __str__(self):
+        returnstr(self.condition) + " " + str(self.thenBranch) + " " + str(self.elseBranch)
+
 
 class Print(Stmt):
     def __init__(self, expression):
-        assert isinstance(expression, Expr.Expr)
+        assert isinstance(expression, Expr)
 
         self.expression = expression
 
     def accept(self, visitor):
         return visitor.visitPrint(self)
 
+    def __str__(self):
+        returnstr(self.expression)
+
 
 class Return(Stmt):
     def __init__(self, keyword, value):
         assert isinstance(keyword, Token.Token)
-        assert isinstance(value, Expr.Expr)
+        assert isinstance(value, Expr)
 
         self.keyword = keyword
         self.value = value
@@ -74,11 +77,14 @@ class Return(Stmt):
     def accept(self, visitor):
         return visitor.visitReturn(self)
 
+    def __str__(self):
+        returnstr(self.keyword) + " " + str(self.value)
+
 
 class Var(Stmt):
     def __init__(self, name, initializer):
         assert isinstance(name, Token.Token)
-        assert isinstance(initializer, Expr.Expr)
+        assert isinstance(initializer, Expr)
 
         self.name = name
         self.initializer = initializer
@@ -86,10 +92,13 @@ class Var(Stmt):
     def accept(self, visitor):
         return visitor.visitVar(self)
 
+    def __str__(self):
+        returnstr(self.name) + " " + str(self.initializer)
+
 
 class While(Stmt):
     def __init__(self, condition, body):
-        assert isinstance(condition, Expr.Expr)
+        assert isinstance(condition, Expr)
         assert isinstance(body, Stmt)
 
         self.condition = condition
@@ -97,4 +106,7 @@ class While(Stmt):
 
     def accept(self, visitor):
         return visitor.visitWhile(self)
+
+    def __str__(self):
+        returnstr(self.condition) + " " + str(self.body)
 

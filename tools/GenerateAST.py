@@ -43,6 +43,10 @@ def defineType(file, baseName, className, fields):
     field_str = ", ".join(names)
     asserts = [tab + tab + "assert isinstance(" + field[1] + ", " + field[0] + ")\n" for field in fields]
     instances = [tab + tab + "self." + name + " = " + name + "\n" for name in names]
+    printString = ""
+    for name in names:
+        printString += "str(self." + name + ") + \" \" + "
+    printString = printString[:-9]
     file.write("\n")
     file.writelines(["class " + className + "(" + baseName + "):\n""", tab + "def __init__(self, " +field_str + "):\n"])
     file.writelines(asserts)
@@ -50,6 +54,7 @@ def defineType(file, baseName, className, fields):
     file.writelines(instances)
     file.write("\n")
     file.writelines([tab + "def accept(self, visitor):\n", tab + tab + "return visitor.visit" + className + "(self)\n\n"])
+    file.writelines([tab + "def __str__(self):\n", tab + tab + "return" + printString + "\n\n"])
 
 
 path = "../lox/Expr.py"

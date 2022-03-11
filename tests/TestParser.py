@@ -6,9 +6,7 @@ import Parser
 
 simpleBinary = "1 + 2;"
 
-
-
-scanner = Scanner.Scanner(input)
+scanner = Scanner.Scanner(simpleBinary)
 tokenList = scanner.scanTokens()
 parser = Parser.Parser(tokenList)
 statements = parser.parse()
