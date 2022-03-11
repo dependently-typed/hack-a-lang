@@ -106,7 +106,7 @@ class Scanner:
                 else:
                     self.advance()
         else:
-            self._add_token(TokenType.SLASH)
+            self.addToken(TokenType.SLASH)
 
 
     def string():

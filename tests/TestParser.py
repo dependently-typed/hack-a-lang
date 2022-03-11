@@ -6,14 +6,14 @@ import Parser
 import Interpreter
 import Expr
 
-simpleBinary = "1 + 2;"
-
-# print(isinstance(Expr.Binary, Expr))
+simpleBinary = "1 + 2/3;"
 scanner = Scanner.Scanner(simpleBinary)
 tokenList = scanner.scanTokens()
 parser = Parser.Parser(tokenList)
 statements = parser.parse()
 print(statements)
+Interpreter = Interpreter.Interpreter()
 for statement in statements:
-    print(statement)
+    print(Interpreter.interpret(statement))
+
 

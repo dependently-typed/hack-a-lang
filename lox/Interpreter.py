@@ -18,6 +18,9 @@ class Interpreter:
     def visitLiteral(self, expr):
         return expr.value
 
+    def visitExpression(self, stmt):
+        return self.evaluate(stmt.expression)
+
     def visitBinary(self, expr):
         left = self.evaluate(expr.left)
         right = self.evaluate(expr.right)
