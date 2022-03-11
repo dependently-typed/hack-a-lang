@@ -32,12 +32,35 @@ print variable3;
 """
 
 forStatement = """
-for (var a = 0; a < 10; a = a + 1) {
+for (var a = 1; a < 10; a = a + 1) {
   print a;
 }
 """
 
-testCases = [simpleBinaryFalse, simpleBinaryTrue, variables, forStatement]
+whileStatement = """
+var a = 1;
+while (a < 10) {
+  print a;
+  a = a + 1;
+}
+"""
+
+functionStatement = """
+fun printSum(a, b) {
+  print a + b;
+}
+printSum(2,5);
+"""
+
+functionReturnStatement = """
+fun returnSum(a, b) {
+  return a + b;
+}
+print returnSum(1,3);
+"""
+
+testCases = [simpleBinaryFalse, simpleBinaryTrue, variables, forStatement, whileStatement, functionStatement, functionReturnStatement]
+
 
 def interpretInput(input: str):
     scanner = Scanner.Scanner(input)

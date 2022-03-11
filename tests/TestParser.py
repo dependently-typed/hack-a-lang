@@ -3,6 +3,7 @@ sys.path.insert(0, '../lox')
 
 import Scanner
 import Parser
+import Interpreter
 import Expr
 
 simpleBinaryFalse = """
@@ -36,13 +37,36 @@ for (var a = 1; a < 10; a = a + 1) {
 }
 """
 
+whileStatement = """
+var a = 1;
+while (a < 10) {
+  print a;
+  a = a + 1;
+}
+"""
+
+functionStatement = """
+fun printSum(a, b) {
+  print a + b;
+}
+printSum(1,2);
+"""
+
+functionReturnStatement = """
+fun returnSum(a, b) {
+  return a + b;
+}
+print returnSum(1,2);
+"""
+
+testCases = [simpleBinaryFalse, simpleBinaryTrue, variables, forStatement, whileStatement, functionStatement, functionReturnStatement]
+
 def parseInput(input: str) -> list:
     scanner = Scanner.Scanner(input)
     tokenList = scanner.scanTokens()
     parser = Parser.Parser(tokenList)
     return parser.parse()
 
-testCases = [simpleBinaryFalse, simpleBinaryTrue, variables, forStatement]
 for testCase in testCases:
     statements = parseInput(testCase)
     for statement in statements:

@@ -234,7 +234,7 @@ class Parser:
                 if len(arguments) >= 255:
                     self.error(self.peek(), "Can't have more than 255 arguments.")
                 arguments.append(self.expression())
-                if self.match(TokenType.COMMA):
+                if not self.match(TokenType.COMMA):
                     break
         paren = self.consume(TokenType.RIGHT_PAREN, "Expect ')' after arguments.")
         return Expr.Call(callee, paren, arguments)
