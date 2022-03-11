@@ -7,7 +7,7 @@ import Interpreter
 import Expr
 
 simpleBinary = """
-for (var a = 1; a < 10; a = a + 1) {
+for (var a = 1; a < 10; a=a + 1) {
   print a;
 }
 """
@@ -17,8 +17,6 @@ tokenList = scanner.scanTokens()
 #     print(i)
 parser = Parser.Parser(tokenList)
 statements = parser.parse()
-for i in statements:
-  print(i)
 Interpreter = Interpreter.Interpreter()
 Interpreter.interpret(statements)
 
