@@ -44,12 +44,19 @@ class Parser:
     #     return name, superclass, methods # as statement Class
 
     def statement(self):
-        if self.match(TokenType.FOR): return self.forStatement()
-        if self.match(TokenType.IF): return self.ifStatement()
-        if self.match(TokenType.PRINT): return self. printStatement()
-        if self.match(TokenType.RETURN): return self.returnStatement()
-        if self.match(TokenType.WHILE): return self.whileStatement()
-        if self.match(TokenType.LEFT_BRACE): return Stmt.Block(self.block())
+        if self.match(TokenType.FOR):
+            return self.forStatement()
+        if self.match(TokenType.IF):
+            return self.ifStatement()
+        if self.match(TokenType.PRINT):
+            return self. printStatement()
+        if self.match(TokenType.RETURN):
+            return self.returnStatement()
+        if self.match(TokenType.WHILE):
+            return self.whileStatement()
+        if self.match(TokenType.LEFT_BRACE):
+            temp = self.block()
+            return Stmt.Block(temp)
         expr = self.expressionStatement()
         return expr
 
@@ -122,7 +129,6 @@ class Parser:
 
     def expressionStatement(self):
         expr = self.expression()
-
         self.consume(TokenType.SEMICOLON, "Expect ';' after expression.")
         statement = Stmt.Expression(expr)
         return statement

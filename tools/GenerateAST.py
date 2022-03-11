@@ -15,6 +15,7 @@ base_desc = {
         "Call" : [["Expr","callee"], ["Token.Token", "parent"], ["list","arguments"]]
     },
     "Stmt": {
+        "Block"      : [["list", "statements"]],
         "Expression" : [["Expr.Expr", "expression"]],
         "Function" : [["Token.Token", "name"], ["list", "params"],["list", "body"]],
         "Expression" : [["Expr.Expr", "expression"]],

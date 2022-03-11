@@ -6,6 +6,19 @@ class Stmt:
     pass
 
 
+class Block(Stmt):
+    def __init__(self, statements):
+        assert isinstance(statements, list)
+
+        self.statements = statements
+
+    def accept(self, visitor):
+        return visitor.visitBlock(self)
+
+    def __str__(self):
+        return str(self.statements)
+
+
 class Expression(Stmt):
     def __init__(self, expression):
         assert isinstance(expression, Expr.Expr)

@@ -6,16 +6,20 @@ import Parser
 import Interpreter
 import Expr
 
-simpleBinary = "\"123\" == 123;"
+simpleBinary = """
+if (1 != 1) {
+  1 == 1;
+} else {
+  1 == 2;
+}
+"""
 scanner = Scanner.Scanner(simpleBinary)
 tokenList = scanner.scanTokens()
-for i in tokenList:
-    print(i)
+# for i in tokenList:
+#     print(i)
 parser = Parser.Parser(tokenList)
 statements = parser.parse()
-# print(statements)
 Interpreter = Interpreter.Interpreter()
-for statement in statements:
-    print(Interpreter.interpret(statement))
+print(Interpreter.interpret(statements))
 
 

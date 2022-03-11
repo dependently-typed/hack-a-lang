@@ -3,17 +3,21 @@ from TokenType import TokenType
 
 class Interpreter:
     def __init__(self):
-        # globals = Environment.Environment()
-        # environment = globals
-        locals = dict()
+        self.globals = Environment.Environment()
+        self.environment = self.globals
+        self.locals = dict()
 
-    def interpret(self, expression):
-        value = self.evaluate(expression)
+    def interpret(self, statements):
+        for statement in statements:
+            value = self.execute(statement)
         return value
 
 
     def evaluate(self, expr):
         return expr.accept(self)
+
+    def execute(self, stmt):
+        return stmt.accept(self)
 
     def visitLiteral(self, expr):
         return expr.value
@@ -104,4 +108,26 @@ class Interpreter:
                 return False
         else:
             return left == right
+
+    def visitIf(self,stmt):
+        if self.isTrue(self.evaluate(stmt.condition)):
+            self.execute(stmt.thenBranch)
+        elif stmt.elseBranch != None:
+            self.execute(stmt.elseBranch)
+        return None
+
+
+    def  visitBlock(self, stmt):
+        self.executeBlock(stmt.statements, Environment.Environment(self.environment));
+        return None
+
+    def executeBlock(self, statements, environment):
+        previous = self.environment
+        try:
+            self.environment = environment
+            for i in statements:
+                self.execute(i)
+        finally:
+            self.environment = previous
+
 

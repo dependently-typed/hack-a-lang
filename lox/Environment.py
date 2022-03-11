@@ -4,11 +4,11 @@ import RuntimeError
 class Environment:
     values = {}
 
-    def __init__(self):
-        self.enclosing = None
-
-    def __init__(self, enclosing):
-        self.enclosing = enclosing
+    def __init__(self, *args):
+        if len(args) == 0:
+            self.enclosing = None
+        else:
+            self.enclosing = args[0]
 
     def get(self, name):
         if name.lexeme in self.values:
