@@ -48,7 +48,7 @@ class Interpreter:
         self.evaluate(stmt.expression)
 
     def visitFunction(self, stmt):
-        function = LoxFunction.LoxFunction(stmt, self.environment, False)
+        function = LoxFunction.LoxFunction(stmt)
         self.environment.define(stmt.name.lexeme, function)
 
     def visitIf(self, stmt):
@@ -84,7 +84,7 @@ class Interpreter:
         if distance is not None:
             self.environment.assignAt(distance, expr.name, value)
         else:
-            self.globals.assign(expr.name, value)
+            self.environment.assign(expr.name, value)
         return value
 
     def visitBinary(self, expr):
@@ -141,6 +141,7 @@ class Interpreter:
         arguments = []
         for argument in expr.arguments:
             arguments.append(self.evaluate(argument))
+
         if not isinstance(callee, LoxCallable.LoxCallable):
             raise RuntimeError(expr.paren, "Can only call functions and classes.")
         function = callee
@@ -148,7 +149,9 @@ class Interpreter:
             raise RuntimeError(expr.paren, "Expected " +
                                function.arity() + " arguments but got " +
                                arguments.size() + ".")
-        return function.call(self, arguments)
+        val = function.call(self, arguments)
+
+        return val
 
     def visitGrouping(self, expr):
         return self.evaluate(expr.expression)
@@ -195,7 +198,7 @@ class Interpreter:
         if distance is not None:
             return self.environment.getAt(distance, name.lexeme)
         else:
-            return self.globals.get(name)
+            return self.environment.get(name)
 
     def checkNumberOperand(self, operator, operand):
         if not isinstance(operand, float):

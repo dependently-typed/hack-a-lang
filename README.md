@@ -55,7 +55,18 @@ python3 -m soln <file containing your program>
 
 ## Part 2: Lexing
 
+Potential exercises:
+- Implement lexing
+  - keyword
+  - operator
+  - variable
+  - floating point number
+- Regexes
+
 ## Part 3: Parsing
+
+Potential exercises:
+- Implement Pratt parsing (operator precedence)
 
 ## Part 4: AST evaluator
 
@@ -64,5 +75,4 @@ python3 -m soln <file containing your program>
 ## Part 6: Optimization
 
 ## Part 7: To infinity and beyond
-
 

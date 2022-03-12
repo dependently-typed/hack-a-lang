@@ -61,20 +61,19 @@ print returnSum(1,3);
 
 fibonacci = """
 fun fibonacci(n) {
-  print n;
   if (n <= 0) {
     return 0;
   }
-  if (n == 1 or n == 2) {
+  if (n == 1) {
     return 1;
   }
-  return fibonacci(n-1)+fibonacci(n-2);
+  return fibonacci(n-1) + fibonacci(n-2);
 }
-print fibonacci(4);
+print fibonacci(20);
 """
 
-# testCases = [simpleBinaryFalse, simpleBinaryTrue, variables, forStatement, whileStatement, functionStatement, functionReturnStatement, fibonacci]
-testCases = [fibonacci]
+testCases = [simpleBinaryFalse, simpleBinaryTrue, variables, forStatement, whileStatement, functionStatement, functionReturnStatement, fibonacci]
+# testCases = [fibonacci]
 
 
 def interpretInput(input: str):
