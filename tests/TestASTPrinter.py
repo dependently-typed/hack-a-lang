@@ -27,8 +27,15 @@ print variable3;
 
 forStatement = """
 for (var a = 1; a < 10; a = a + 1) {
-  print a;
+    print a;
 }
+"""
+
+functionStatement = """
+fun printSum(a, b) {
+  print a + b;
+}
+printSum(a, b);
 """
 
 expression = Expr.Binary(
@@ -49,6 +56,7 @@ def parseInput(input: str) -> list:
 # print(Token.Token(TokenType.MINUS, "-", None, 1))
 # print(AstPrinter().printast(expression))
 
-statements = parseInput(forStatement)
+statements = parseInput(functionStatement)
+print(statements)
 for statement in statements:
     print(AstPrinter().printast(statement))

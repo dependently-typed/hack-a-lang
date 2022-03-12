@@ -11,12 +11,12 @@ class AstPrinter:
     def visitBlock(self, stmt):
         string = "(block "
         for statement in stmt.statements:
-            string += str(statement.accept(self))
+            string += statement.accept(self)
         string += ")"
         return string
 
     def visitExpression(self, stmt):
-        self.parenthesize(";", stmt.expression)
+        return self.parenthesize(";", stmt.expression)
 
     def visitFunction(self, stmt):
         string = "(fun " + stmt.name.lexeme + "("
@@ -71,7 +71,7 @@ class AstPrinter:
         return self.parenthesize(expr.operator.lexeme, expr.right)
     
     def visitVariable(self, expr):
-        return expr.name.lexeme
+        return str(expr.name.lexeme)
 
     def parenthesize(self, name, *exprs):
         '''
@@ -87,7 +87,6 @@ class AstPrinter:
     def parenthesize2(self, name, *parts):
         '''
         Parenthesize Expressions, Statements, Lists, or Tokens
-        TODO: Not completely working, parts to transform is passing all arguments as one.
         '''
         string = ""
         string += self.transform("(" + name, *parts)
@@ -97,7 +96,6 @@ class AstPrinter:
     def transform(self, string, *parts):
         '''
         Get strings for different types
-        TODO: Not completely working, parts to transform is passing all arguments as one.
         '''
         for part in parts:
             string += " "
