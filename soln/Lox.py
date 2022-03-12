@@ -55,9 +55,3 @@ class Lox:
         print(f"{str(error)}\n[line {error.token.line}]")
         self.hadRuntimeError = True
 
-
-if __name__ == "__main__":
-    if len(sys.argv) == 2:
-        Lox().runFile(sys.argv[1])
-    else:
-        sys.exit("Usage: python -m Lox <filename>")

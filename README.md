@@ -75,6 +75,10 @@ Token.py        # The token class
 TokenTypes.py   # The different types of special tokens
 ```
 
+### Bonus
+
+1. TODO
+
 ## Part 3: Parsing
 
 The Parser takes the tokenized version of the source from the Lexer and then 
@@ -86,7 +90,8 @@ of tokens that come together to statements that can later be evaluated by the in
 
 1. Implement the `block` function in `Parser.py`
 2. Implement the `andOperator` and `comparison` function in `Parser.py`
-3. (Optional) Implement the `forStatement` function in `Parser.py`
+3. Implement the `forStatement` function in `Parser.py`
+
 ### Relevant files
 
 ```
@@ -94,6 +99,11 @@ Parser.py     # The actual parser that takes the tokenized string and generates 
 Expr.py       # The expression class for representing simple expressions
 Stmt.py       # The statement class for representing compound statements
 ```
+
+### Bonus
+
+1. TODO
+2. TODO
 
 ## Part 4: AST evaluator
 
@@ -104,9 +114,9 @@ changing states of the environment.
 
 ### Exercises
 
-1. Implement the `executeBlock` function in `Interpreter.py`
-2. Implement the `visitIf` and `visitWhile` function in `Interpreter.py`
-3. (Optional) Implement the `get` function in `Environment.py`
+1. Implement the `get` function in `Environment.py`
+2. Implement the `executeBlock` function in `Interpreter.py`
+3. Implement the `visitIf` and `visitWhile` function in `Interpreter.py`
 
 ### Relevant files
 
@@ -118,6 +128,12 @@ LoxFunction.py      # File needed for handling environment changes
 RuntimeError.py     # Custom RuntimeError class
 Return.py           # Custom Return class
 ```
+
+### Bonus
+
+1. Remove our implementation of functions and try to implement them yourself.
+2. We omitted implementing the OOP features of Lox. Take a shot at that. You
+   can find more details in the Crafting Interpreters book.
 
 ## Part 5: Bytecode
 
