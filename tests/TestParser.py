@@ -59,7 +59,16 @@ fun returnSum(a, b) {
 print returnSum(1,2);
 """
 
-testCases = [simpleBinaryFalse, simpleBinaryTrue, variables, forStatement, whileStatement, functionStatement, functionReturnStatement]
+fibonacci = """
+fun fibonacci(n) {
+  if (n <= 1) return n;
+  return fibonacci(n - 2) + fibonacci(n - 1);
+}
+
+print fibonacci(10);
+"""
+
+testCases = [simpleBinaryFalse, simpleBinaryTrue, variables, forStatement, whileStatement, functionStatement, functionReturnStatement, fibonacci]
 
 def parseInput(input: str) -> list:
     scanner = Scanner.Scanner(input)

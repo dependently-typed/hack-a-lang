@@ -19,7 +19,7 @@ class Interpreter:
                 value = self.execute(statement)
             return value
         except RuntimeError as error:
-            Lox.runtimeError(error)
+            raise RuntimeError(error, str(error))
 
     def evaluate(self, expr):
         return expr.accept(self)
