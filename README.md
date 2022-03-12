@@ -1,8 +1,8 @@
 # hack-a-lang 0001
 
 This tutorial will give you a taste of what its like to implement your own
-programming language from scratch. It is based of the book "Crafting
-Interpreters" by Bob Nystrom. We will be working on a subset of the Lox
+programming language from scratch. It is based of the book [Crafting
+Interpreters](https://craftinginterpreters.com/) by Bob Nystrom. We will be working on a subset of the Lox
 programming language. The tutorial is structured as a series of exercises. We
 won't be developing everything from scratch. Rather, we'll be filling in some
 of the more important parts of the implementation. We decided to go this route
