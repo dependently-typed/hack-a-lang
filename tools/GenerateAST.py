@@ -11,7 +11,6 @@ base_desc = {
         "Grouping" : [["Expr", "expression"]],
         "Literal" : [["object", "value"]],
         "Variable" : [["Token.Token", "name"]],
-        "Variable" : [["Token.Token", "keyword"]],
         "Call" : [["Expr","callee"], ["Token.Token", "parent"], ["list","arguments"]]
     },
     "Stmt": {

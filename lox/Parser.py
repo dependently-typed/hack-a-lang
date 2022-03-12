@@ -25,7 +25,8 @@ class Parser:
             if self.match(TokenType.CLASS): return self.classDeclaration()
             if self.match(TokenType.FUN): return self.function("function")
             if self.match(TokenType.VAR): return self.varDeclaration()
-            return self.statement()
+            statement = self.statement()
+            return statement
         except Exception: # create ParseError?
             self.synchronise()
             return None
@@ -47,7 +48,8 @@ class Parser:
         if self.match(TokenType.FOR):
             return self.forStatement()
         if self.match(TokenType.IF):
-            return self.ifStatement()
+            temp = self.ifStatement()
+            return temp
         if self.match(TokenType.PRINT):
             return self. printStatement()
         if self.match(TokenType.RETURN):
@@ -57,21 +59,19 @@ class Parser:
         if self.match(TokenType.LEFT_BRACE):
             temp = self.block()
             return Stmt.Block(temp)
-        expr = self.expressionStatement()
-        return expr
+        return self.expressionStatement()
 
     def forStatement(self):
         self.consume(TokenType.LEFT_PAREN, "Expect '(' after 'for'.")
         initializer = None
         if self.match(TokenType.SEMICOLON): initializer = None
         elif self.match(TokenType.VAR): initializer = self.varDeclaration()
-        else: initializer = expressionStatement()
+        else: initializer = self.expressionStatement()
 
         condition = None
         if not self.check(TokenType.SEMICOLON):
             condition = self.expression()
         self.consume(TokenType.SEMICOLON, "Expect ';' after loop condition.")
-
         increment = None
         if not self.check(TokenType.RIGHT_PAREN):
             increment = self.expression()
@@ -79,9 +79,10 @@ class Parser:
 
         body = self.statement()
         if increment is not None:
-            body = Stmt.Block([body, Stmt.Expression(increment)])
+           body = Stmt.Block([body, Stmt.Expression(increment)])
 
-        if condition is None: condition = Expr.Literal(True)
+        if condition is None:
+            condition = Expr.Literal(True)
         body = Stmt.While(condition, body)
 
         if initializer is not None:
@@ -130,8 +131,7 @@ class Parser:
     def expressionStatement(self):
         expr = self.expression()
         self.consume(TokenType.SEMICOLON, "Expect ';' after expression.")
-        statement = Stmt.Expression(expr)
-        return statement
+        return Stmt.Expression(expr)
 
     def function(self, kind):
         name = self.consume(TokenType.IDENTIFIER, "Expect " + kind + " name.")
@@ -152,7 +152,8 @@ class Parser:
     def block(self):
         statements = []
         while (not self.check(TokenType.RIGHT_BRACE) and not self.isAtEnd()):
-            statements.append(self.declaration())
+            temp = self.declaration()
+            statements.append(temp)
         self.consume(TokenType.RIGHT_BRACE, "Expect '}' after block.")
         return statements
 
@@ -236,7 +237,7 @@ class Parser:
                 if len(arguments) >= 255:
                     self.error(self.peek(), "Can't have more than 255 arguments.")
                 arguments.append(self.expression())
-                if self.match(TokenType.COMMA):
+                if not self.match(TokenType.COMMA):
                     break
         paren = self.consume(TokenType.RIGHT_PAREN, "Expect ')' after arguments.")
         return Expr.Call(callee, paren, arguments)
