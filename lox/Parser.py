@@ -66,7 +66,8 @@ class Parser:
         initializer = None
         if self.match(TokenType.SEMICOLON): initializer = None
         elif self.match(TokenType.VAR): initializer = self.varDeclaration()
-        else: initializer = expressionStatement()
+        else: initializer = self.expressionStatement()
+
         condition = None
         if not self.check(TokenType.SEMICOLON):
             condition = self.expression()
@@ -78,7 +79,7 @@ class Parser:
 
         body = self.statement()
         if increment is not None:
-            body = Stmt.Block([body, Stmt.Expression(increment)])
+           body = Stmt.Block([body, Stmt.Expression(increment)])
 
         if condition is None:
             condition = Expr.Literal(True)
@@ -86,6 +87,7 @@ class Parser:
 
         if initializer is not None:
             body = Stmt.Block([initializer, body])
+
         return body
 
     def ifStatement(self):
