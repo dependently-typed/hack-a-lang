@@ -17,7 +17,7 @@ class Environment:
         if not self.enclosing is None:
             return self.enclosing.get(name)
 
-        raise RuntimeError.RuntimeError(name, "Undefined variable '" + name.lexeme + "'.")
+        raise RuntimeError.RuntimeError(name, "Undefined variable \'" + name.lexeme + "\'.")
 
     def assign(self, name, value):
         if name.lexeme in self.values:
