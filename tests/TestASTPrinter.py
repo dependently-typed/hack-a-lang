@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, '../lox')
+sys.path.insert(0, 'd:\Projects\dtyped\hack-a-lang\lox')
 
 import Scanner
 import Parser
@@ -37,6 +37,13 @@ fun printSum(a, b) {
 }
 printSum(a, b);
 """
+fibonacci = """
+fun fibonacci(n) {
+  if (n <= 1)  return n;
+  return fibonacci(n - 2) + fibonacci(n - 1);
+}
+print fibonacci(10);
+"""
 
 expression = Expr.Binary(
     Expr.Unary(
@@ -56,6 +63,6 @@ def parseInput(input: str) -> list:
 # print(Token.Token(TokenType.MINUS, "-", None, 1))
 # print(AstPrinter().printast(expression))
 
-statements = parseInput(functionStatement)
+statements = parseInput(fibonacci)
 for statement in statements:
     print(AstPrinter().printast(statement))

@@ -25,7 +25,8 @@ class Parser:
             if self.match(TokenType.CLASS): return self.classDeclaration()
             if self.match(TokenType.FUN): return self.function("function")
             if self.match(TokenType.VAR): return self.varDeclaration()
-            return self.statement()
+            statement = self.statement()
+            return statement
         except Exception: # create ParseError?
             self.synchronise()
             return None
@@ -57,8 +58,7 @@ class Parser:
         if self.match(TokenType.LEFT_BRACE):
             temp = self.block()
             return Stmt.Block(temp)
-        expr = self.expressionStatement()
-        return expr
+        return self.expressionStatement()
 
     def forStatement(self):
         self.consume(TokenType.LEFT_PAREN, "Expect '(' after 'for'.")
@@ -130,8 +130,7 @@ class Parser:
     def expressionStatement(self):
         expr = self.expression()
         self.consume(TokenType.SEMICOLON, "Expect ';' after expression.")
-        statement = Stmt.Expression(expr)
-        return statement
+        return Stmt.Expression(expr)
 
     def function(self, kind):
         name = self.consume(TokenType.IDENTIFIER, "Expect " + kind + " name.")
@@ -154,6 +153,7 @@ class Parser:
         while (not self.check(TokenType.RIGHT_BRACE) and not self.isAtEnd()):
             statements.append(self.declaration())
         self.consume(TokenType.RIGHT_BRACE, "Expect '}' after block.")
+        print("block",  statements)
         return statements
 
     def assignment(self):

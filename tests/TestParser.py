@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, '../lox')
+sys.path.insert(0, 'd:\Projects\dtyped\hack-a-lang\lox')
 
 import Scanner
 import Parser
@@ -61,7 +61,9 @@ print returnSum(1,2);
 
 fibonacci = """
 fun fibonacci(n) {
-  if (n <= 1) return n;
+  if (n <= 1) {
+    return n;
+  }
   return fibonacci(n - 2) + fibonacci(n - 1);
 }
 
@@ -76,10 +78,11 @@ def parseInput(input: str) -> list:
     parser = Parser.Parser(tokenList)
     return parser.parse()
 
-testCases = [forStatement] #simpleBinaryFalse, simpleBinaryTrue, variables, forStatement]
+testCases = [fibonacci] #simpleBinaryFalse, simpleBinaryTrue, variables, forStatement]
 
 for testCase in testCases:
     statements = parseInput(testCase)
+    print(statements)
     for statement in statements:
         print(statement)
 

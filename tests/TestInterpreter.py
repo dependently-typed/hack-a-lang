@@ -65,7 +65,7 @@ fun fibonacci(n) {
   return fibonacci(n - 2) + fibonacci(n - 1);
 }
 
-print fibonacci(10);
+print fibonacci(1);
 """
 
 testCases = [simpleBinaryFalse, simpleBinaryTrue, variables, forStatement, whileStatement, functionStatement, functionReturnStatement, fibonacci]
@@ -76,9 +76,13 @@ def interpretInput(input: str):
     tokenList = scanner.scanTokens()
     parser = Parser.Parser(tokenList)
     statements = parser.parse()
+    print(statements)
     interpreter = Interpreter.Interpreter()
     value = interpreter.interpret(statements)
 
-for testCase in testCases:
-    value = interpretInput(testCase)
-    print(value) # print None if no return value
+# for testCase in testCases:
+#     value = interpretInput(testCase)
+#     print(value) # print None if no return value
+
+value = interpretInput(fibonacci)
+print(value)
