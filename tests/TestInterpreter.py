@@ -64,12 +64,12 @@ fun fibonacci(n) {
   if (n <= 0) {
     return 0;
   }
-  if (n == 1 or n == 2) {
+  if (n == 1) {
     return 1;
   }
   return fibonacci(n-1) + fibonacci(n-2);
 }
-print fibonacci(3);
+print fibonacci(20);
 """
 
 functionCall ="""
@@ -99,8 +99,8 @@ fun recur(n) {
 print recur(6);
 """
 
-# testCases = [simpleBinaryFalse, simpleBinaryTrue, variables, forStatement, whileStatement, functionStatement, functionReturnStatement, fibonacci]
-testCases = [fibonacci]
+testCases = [simpleBinaryFalse, simpleBinaryTrue, variables, forStatement, whileStatement, functionStatement, functionReturnStatement, fibonacci]
+# testCases = [fibonacci]
 
 
 def interpretInput(input: str):
