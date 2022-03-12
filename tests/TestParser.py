@@ -77,10 +77,11 @@ def parseInput(input: str) -> list:
     parser = Parser.Parser(tokenList)
     return parser.parse()
 
-testCases = [forStatement] #simpleBinaryFalse, simpleBinaryTrue, variables, forStatement]
+testCases = [fibonacci] #simpleBinaryFalse, simpleBinaryTrue, variables, forStatement]
 
 for testCase in testCases:
     statements = parseInput(testCase)
+    print(statements)
     for statement in statements:
         print(statement)
 

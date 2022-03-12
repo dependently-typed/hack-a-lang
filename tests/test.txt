@@ -1,0 +1,19 @@
+fun function1(a) {
+  return a + 1;
+}
+
+fun function2(b) {
+  return b + 2;
+}
+
+fun function3(a, b) {
+  return function1(a) + function2(b);
+}
+
+var value1 = function3(2, 3);
+var value2 = function3(3, 4);
+
+print value1;
+print value2;
+
+print value1 * value2;

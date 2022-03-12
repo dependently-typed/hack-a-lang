@@ -73,8 +73,6 @@ print fibonacci(20);
 """
 
 testCases = [simpleBinaryFalse, simpleBinaryTrue, variables, forStatement, whileStatement, functionStatement, functionReturnStatement, fibonacci]
-# testCases = [fibonacci]
-
 
 def interpretInput(input: str):
     scanner = Scanner.Scanner(input)
