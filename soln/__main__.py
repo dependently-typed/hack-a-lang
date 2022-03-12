@@ -4,7 +4,7 @@ import os
 # Fix imports
 sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
 
-import Lox
+from Lox import Lox
 
 if __name__ == "__main__":
     if len(sys.argv) == 2:
