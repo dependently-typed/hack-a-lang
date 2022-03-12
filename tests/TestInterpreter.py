@@ -5,7 +5,7 @@ import Scanner
 import Parser
 import Interpreter
 import Expr
-
+from Stmt import Stmt
 simpleBinaryFalse = """
 if (1 != 1) {
   print "true";
@@ -61,14 +61,20 @@ print returnSum(1,3);
 
 fibonacci = """
 fun fibonacci(n) {
-  if (n <= 1) return n;
-  return fibonacci(n - 2) + fibonacci(n - 1);
+  print n;
+  if (n <= 0) {
+    return 0;
+  }
+  if (n == 1 or n == 2) {
+    return 1;
+  }
+  return fibonacci(n-1)+fibonacci(n-2);
 }
-
-print fibonacci(10);
+print fibonacci(4);
 """
 
-testCases = [simpleBinaryFalse, simpleBinaryTrue, variables, forStatement, whileStatement, functionStatement, functionReturnStatement, fibonacci]
+# testCases = [simpleBinaryFalse, simpleBinaryTrue, variables, forStatement, whileStatement, functionStatement, functionReturnStatement, fibonacci]
+testCases = [fibonacci]
 
 
 def interpretInput(input: str):
@@ -76,8 +82,10 @@ def interpretInput(input: str):
     tokenList = scanner.scanTokens()
     parser = Parser.Parser(tokenList)
     statements = parser.parse()
+    # print(statements)
     interpreter = Interpreter.Interpreter()
     value = interpreter.interpret(statements)
+
 
 for testCase in testCases:
     value = interpretInput(testCase)

@@ -61,11 +61,12 @@ print returnSum(1,2);
 
 fibonacci = """
 fun fibonacci(n) {
-  if (n <= 1) return n;
-  return fibonacci(n - 2) + fibonacci(n - 1);
+  if (n <= 1) {
+    return n;
+  }
+  return n+fibonacci(n-1);
 }
-
-print fibonacci(10);
+print fibonacci(1);
 """
 
 testCases = [simpleBinaryFalse, simpleBinaryTrue, variables, forStatement, whileStatement, functionStatement, functionReturnStatement, fibonacci]
