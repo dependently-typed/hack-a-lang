@@ -6,7 +6,6 @@ from TokenType import TokenType
 
 class AstPrinter:
     def printast(self, exprOrStmt):
-        print("print expr or stmt:", exprOrStmt)
         return exprOrStmt.accept(self)
 
     def visitBlock(self, stmt):
@@ -21,7 +20,6 @@ class AstPrinter:
 
     def visitFunction(self, stmt):
         string = "(fun " + stmt.name.lexeme + "("
-        print("function visited:", stmt.name.lexeme, [param.lexeme for param in stmt.params], [body for body in stmt.body])
         for param in stmt.params:
             if param != stmt.params[0]: string += " "
             string += param.lexeme

@@ -1,6 +1,6 @@
 import sys
 
-# import Interpreter
+import Interpreter
 import Parser
 import Scanner
 import Token
@@ -8,7 +8,7 @@ from TokenType import TokenType
 
 class Lox:
     def __init__(self):
-        # interpreter = Interpreter()
+        self.interpreter = Interpreter.Interpreter()
         self.hadError = False
         self.hadRuntimeError = False
 
@@ -30,13 +30,13 @@ class Lox:
 
 
     def run(self, source: str) -> None:
-        scanner = Scanner(source)
+        scanner = Scanner.Scanner(source)
         tokens = scanner.scanTokens()
-        parser = Parser(tokens)
+        parser = Parser.Parser(tokens)
         statements = parser.parse()
         if self.hadError: return
         if self.hadRuntimeError: return
-        # self.interpreter.interpret(statements)
+        self.interpreter.interpret(statements)
 
     def lineError(self, line: int, message: str) -> None:
         self.report(line, "", message)
@@ -47,12 +47,12 @@ class Lox:
 
     def tokenError(self, token: Token.Token, message: str) -> None:
         if token.type == TokenType.TokenType.EOF:
-            report(token.line, " at end", message)
+            self.report(token.line, " at end", message)
         else:
-            report(token.line, " at '" + token.lexeme + "'" + message)
+            self.report(token.line, " at '" + token.lexeme + "'" + message)
 
     def runtimeError(self, error: RuntimeError) -> None:
-        print(f"{str(e)}\n[line {error.token.line}]")
+        print(f"{str(error)}\n[line {error.token.line}]")
         self.hadRuntimeError = True
 
 

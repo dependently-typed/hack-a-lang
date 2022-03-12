@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, 'd:\Projects\dtyped\hack-a-lang\lox')
+sys.path.insert(0, '../lox')
 
 import Scanner
 import Parser

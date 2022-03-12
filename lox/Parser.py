@@ -155,7 +155,6 @@ class Parser:
             temp = self.declaration()
             statements.append(temp)
         self.consume(TokenType.RIGHT_BRACE, "Expect '}' after block.")
-        print("block",  statements)
         return statements
 
     def assignment(self):
