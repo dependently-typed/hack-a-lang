@@ -135,9 +135,20 @@ Return.py           # Custom Return class
 2. We omitted implementing the OOP features of Lox. Take a shot at that. You
    can find more details in the Crafting Interpreters book.
 
+## Interlude
+
+This concludes the parts you'll be implementing during the workshop. The
+remaining sections are long-form and will take a fair bit of time to implement.
+We're providing this so that you can apply the concepts we talked about on your
+own after hack-a-lang. Feel free to use the dependently-typed Discord to ask
+questions.
+
 ## Part 5: Bytecode
 
-## Part 6: Optimization
+### Exercises
 
-## Part 7: To infinity and beyond
+In this series of exercises we will add bytecode interpreter support for Lox.
 
+1. First, we need to learn about the Lox bytecode instructions. This will take some time to get through. You'll need to skim chapters 14 to 25 of the Crafting Interpreters book. Remember to carefully observe the purpose of each instruction.
+2. Encode the bytecode instructions in Python. You can do this any way you prefer (using classes, enums, dictionaries, tuples). For the full set of instructions you need to look at https://github.com/munificent/craftinginterpreters/blob/master/c/chunk.h
+3. Write a function that takes an AST and outputs bytecode. Start small. You can do this by supporting only a subset of the AST. Only then move on to more complex nodes like functions and closures.
