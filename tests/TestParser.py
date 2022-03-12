@@ -30,11 +30,13 @@ print variable2;
 print variable3;
 """
 
-forStatment = """
+forStatement = """
 for (var a = 1; a < 10; a = a + 1) {
   print a;
 }
 """
+
+simpleDivide = "// hello world"
 
 def parseInput(input: str) -> list:
     scanner = Scanner.Scanner(input)
