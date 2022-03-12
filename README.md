@@ -57,6 +57,8 @@ python3 -m soln <file containing your program>
 Lexing is all about turning input text into sequence of tokens. Open `lox/Scanner.py` in your favorite text editor. In this file, there are several instance variables and functions with no implementation. Each function header has descriptive comments above that explains what the functions should do. Read through each descriptions, starting from the most top level function `scanTokens()` and implement a scanner for Lox. Feel free to ask questions anytime!
 
 To understand what tokens Lox has, check `Token.py`. To see how tokens are represented, check the token constructor in `TokenType.py`.
+
+Once you are done, you can check if your implementation works properly by running `tests/TestScanner.py`. 
 ## Part 3: Parsing
 
 ## Part 4: AST evaluator
