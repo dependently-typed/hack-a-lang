@@ -26,24 +26,14 @@ class Interpreter:
     def execute(self, stmt):
         return stmt.accept(self)
 
-    def executeBlock(self, statements: list, environment: Environment.Environment) -> None:
-        """
-        Execute a block of code
-        Save your current environment and run every statement.
-        Make sure to restor your environment once done.
-        """
-        ######################################################
-        # TODO: Write your implementation here               #
-        ######################################################
-
-
-
-
-
-
-        ######################################################
-        # End of your implementation                         #
-        ######################################################
+    def executeBlock(self, statements, environment):
+        previous = self.environment
+        try:
+            self.environment = environment
+            for statement in statements:
+                self.execute(statement)
+        finally:
+            self.environment = previous
 
     def visitBlock(self, stmt):
         self.executeBlock(stmt.statements, Environment.Environment(self.environment));
@@ -56,22 +46,12 @@ class Interpreter:
         function = LoxFunction.LoxFunction(stmt)
         self.environment.define(stmt.name.lexeme, function)
 
-    def visitIf(self, stmt) -> None:
-        """
-        Based on the condition of the statement, choose what to execute
-        """
-        ######################################################
-        # TODO: Write your implementation here               #
-        ######################################################
-        
-        
-
-
-
-
-        ######################################################
-        # End of your implementation                         #
-        ######################################################
+    def visitIf(self, stmt):
+        if self.isTrue(self.evaluate(stmt.condition)):
+            self.execute(stmt.thenBranch)
+        elif stmt.elseBranch is not None:
+            self.execute(stmt.elseBranch)
+        return None
 
     def visitPrint(self, stmt):
         value = self.evaluate(stmt.expression)
@@ -89,19 +69,9 @@ class Interpreter:
             value = self.evaluate(stmt.initializer)
         self.environment.define(stmt.name.lexeme, value)
 
-    def visitWhile(self, stmt) -> None:
-        """
-        While the statment condition is true, execute the body of the statement
-        """
-        ######################################################
-        # TODO: Write your implementation here               #
-        ######################################################
-        
-
-
-        ######################################################
-        # End of your implementation                         #
-        ######################################################
+    def visitWhile(self, stmt):
+        while self.isTrue(self.evaluate(stmt.condition)):
+            self.execute(stmt.body)
 
     def visitAssign(self, expr):
         value = self.evaluate(expr.value)

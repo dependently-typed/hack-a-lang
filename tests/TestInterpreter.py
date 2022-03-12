@@ -72,7 +72,36 @@ fun fibonacci(n) {
 print fibonacci(20);
 """
 
+functionCall ="""
+fun function1(a) {
+  return a + 1;
+}
+
+fun function2(b) {
+  return b + 2;
+}
+
+fun function3(a, b) {
+  return function1(a) + function2(b);
+}
+
+print function3(2, 3);
+"""
+
+simpleRecursion = """
+fun recur(n) {
+  if (n == 1) {
+    return 1;
+  }
+  return recur(n - 1) + 2;
+}
+
+print recur(6);
+"""
+
 testCases = [simpleBinaryFalse, simpleBinaryTrue, variables, forStatement, whileStatement, functionStatement, functionReturnStatement, fibonacci]
+# testCases = [fibonacci]
+
 
 def interpretInput(input: str):
     scanner = Scanner.Scanner(input)

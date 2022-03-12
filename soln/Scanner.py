@@ -2,8 +2,6 @@ import Lox
 from TokenType import TokenType
 from Token import Token
 
-from typing import List
-
 class Scanner:
     def __init__(self, source):
         self.source = source
@@ -52,26 +50,11 @@ class Scanner:
             'while': TokenType.WHILE,
         }
 
-    def scanTokens(self) -> List[Token]:
-        """
-        Scan the file and tokenize it.
-        You want to loop through the entire file and tokenize it
-        Within your loop you want to
-            1. Set self.start to your current position
-            2. Call scan Token to scan each token
-        At the end you want to append a end-of-file (EOF) token to the list of tokens
-        """
-        ######################################################
-        # TODO: Write your implementation here               #
-        ######################################################
-
-
-
-
-
-        ######################################################
-        # End of your implementation                         #
-        ######################################################
+    def scanTokens(self):
+        while not self.isAtEnd():
+            self.start = self.current
+            self.scanToken()
+        self.tokens.append(Token(TokenType.EOF, '', None, self.line))
         return self.tokens
 
     def scanToken(self):
@@ -103,29 +86,14 @@ class Scanner:
                 self.advance()
         self.addToken(TokenType.NUMBER, float(self.source[self.start:self.current]))
 
-    def identifier(self) -> None:
-        """
-        Tokenize an identifier, a keyword, variable or function name are some examples.
-        You want to check or peek ahead if the next character is valid.
-        A valid identifier consists of the alphabet and numbers only.
-        This will allow you to bet the starting and ending position of your identifier
-        in the source. With this you want to check if you want to add a keyword token or
-        a custom IDENTIFIER token.
-        """
-        ######################################################
-        # TODO: Write your implementation here               #
-        ######################################################
-
-
-
-
-
-
-
-
-        ######################################################
-        # End of your implementation                         #
-        ######################################################
+    def identifier(self):
+        while self.peek().isalnum():
+            self.advance()
+        text = self.source[self.start:self.current]
+        if text not in self.keywords:
+            self.addToken(TokenType.IDENTIFIER)
+        else:
+            self.addToken(self.keywords[text])
 
     def slash(self):
         if self.match('/'):

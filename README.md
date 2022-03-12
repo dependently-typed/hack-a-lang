@@ -55,20 +55,69 @@ python3 -m soln <file containing your program>
 
 ## Part 2: Lexing
 
-Potential exercises:
-- Implement lexing
-  - keyword
-  - operator
-  - variable
-  - floating point number
-- Regexes
+The Lexer/Scanner takes the raw input stream of characters and tokenizes it.
+This will help the parser establish the relationship between each token.
+Basically we are going through the characters in a loop while classifying each
+character/string by comparing it to our list of special tokens or categories through
+a lot of conditional statements.
+
+
+### Exercises
+
+1. Implement the `scanTokens` function in `Scanner.py`
+2. Implement the `identifier` function in `Scanner.py`
+
+### Relevant files
+
+```
+Scanner.py      # The actual lexer that tokenizes the character source
+Token.py        # The token class
+TokenTypes.py   # The different types of special tokens
+```
 
 ## Part 3: Parsing
 
-Potential exercises:
-- Implement Pratt parsing (operator precedence)
+The Parser takes the tokenized version of the source from the Lexer and then 
+creates an Abstract Syntax Tree (AST) based on the grammar rules of the language.
+There are different rules for expressions and statements, which are certain configurations
+of tokens that come together to statements that can later be evaluated by the interpreter.
+
+### Exercises
+
+1. Implement the `block` function in `Parser.py`
+2. Implement the `andOperator` and `comparison` function in `Parser.py`
+3. (Optional) Implement the `forStatement` function in `Parser.py`
+### Relevant files
+
+```
+Parser.py     # The actual parser that takes the tokenized string and generates the AST
+Expr.py       # The expression class for representing simple expressions
+Stmt.py       # The statement class for representing compound statements
+```
 
 ## Part 4: AST evaluator
+
+The AST evaluator/Interpreter takes the generated AST and performs all of the actions needed
+in the code from evaluating arithmetic expressions to recursive function calls. The Interpreter
+has to deal with evaluating expressions and statements, executing bits of code, and managing the
+changing states of the environment. 
+
+### Exercises
+
+1. Implement the `executeBlock` function in `Interpreter.py`
+2. Implement the `visitIf` and `visitWhile` function in `Interpreter.py`
+3. (Optional) Implement the `get` function in `Environment.py`
+
+### Relevant files
+
+```
+Interpreter.py      # The intepreter that will execute the parsed code
+Environment.py      # The environment at runtime, handles defined variables and more
+LoxCallable.py      # Originally and interface for LoxFunction
+LoxFunction.py      # File needed for handling environment changes
+RuntimeError.py     # Custom RuntimeError class
+Return.py           # Custom Return class
+```
 
 ## Part 5: Bytecode
 

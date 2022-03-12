@@ -3,14 +3,13 @@ import Stmt
 import Lox
 from TokenType import TokenType
 
-from typing import List
 
 class Parser:
     def __init__(self, tokenList):
         self.current = 0
         self.tokenList = tokenList
 
-    def parse(self) -> List[Stmt.Stmt]:
+    def parse(self) -> list:
         statements = []
         while not self.isAtEnd():
             statements.append(self.declaration())
@@ -19,7 +18,7 @@ class Parser:
     def expression(self):
         return self.assignment()
 
-    def declaration(self) -> Stmt.Stmt:
+    def declaration(self):
         try:
             if self.match(TokenType.CLASS): return self.classDeclaration()
             if self.match(TokenType.FUN): return self.function("function")
@@ -46,7 +45,8 @@ class Parser:
         if self.match(TokenType.FOR):
             return self.forStatement()
         if self.match(TokenType.IF):
-            return self.ifStatement()
+            temp = self.ifStatement()
+            return temp
         if self.match(TokenType.PRINT):
             return self. printStatement()
         if self.match(TokenType.RETURN):
@@ -58,43 +58,34 @@ class Parser:
             return Stmt.Block(temp)
         return self.expressionStatement()
 
-    def forStatement(self) -> Stmt.Block:
-        """
-        This is a long implementation
-        The syntax for a for loop is as following:
-        for (initializer; condition; increment) { body }
-        The initializer, condition, and increment can all technically be empty.
-        The initializer can have a variable declaration or some expression statement
-        The condition and increment are some expressions
-        The body of the for loop is a statement
-        Now if the incremement exists you want to create a block with the body with the
-        increment added to the end of the body
-        If the condition does not exist then we essentially have a while loop statement,
-        we set the condition accordingly
-        If the initializer is exists then we add it to the front of the body as a new block
-        Finally we return this
-        """
-        ######################################################
-        # TODO: Write your implementation here               #
-        ######################################################
+    def forStatement(self):
+        self.consume(TokenType.LEFT_PAREN, "Expect '(' after 'for'.")
+        initializer = None
+        if self.match(TokenType.SEMICOLON): initializer = None
+        elif self.match(TokenType.VAR): initializer = self.varDeclaration()
+        else: initializer = self.expressionStatement()
 
+        condition = None
+        if not self.check(TokenType.SEMICOLON):
+            condition = self.expression()
+        self.consume(TokenType.SEMICOLON, "Expect ';' after loop condition.")
+        increment = None
+        if not self.check(TokenType.RIGHT_PAREN):
+            increment = self.expression()
+        self.consume(TokenType.RIGHT_PAREN, "Expect ')' after for clauses.")
 
+        body = self.statement()
+        if increment is not None:
+           body = Stmt.Block([body, Stmt.Expression(increment)])
 
+        if condition is None:
+            condition = Expr.Literal(True)
+        body = Stmt.While(condition, body)
 
+        if initializer is not None:
+            body = Stmt.Block([initializer, body])
 
-
-
-
-
-
-
-
-
-
-
-        ######################################################
-        # End of your implementation                         #
-        ######################################################
+        return body
 
     def ifStatement(self):
         self.consume(TokenType.LEFT_PAREN, "Expect '(' after 'if'.")
@@ -155,23 +146,13 @@ class Parser:
         body = self.block()
         return Stmt.Function(name, parameters, body)
 
-    def block(self) -> List[Stmt.Stmt]:
-        """
-        Parse a code block -> { this part }
-        While you are not at the end of a file right brace you want to
-        parse each statement in the block and return it as a list
-        """
-        ######################################################
-        # TODO: Write your implementation here               #
-        ######################################################
-
-
-
-
-
-        ######################################################
-        # End of your implementation                         #
-        ######################################################
+    def block(self):
+        statements = []
+        while (not self.check(TokenType.RIGHT_BRACE) and not self.isAtEnd()):
+            temp = self.declaration()
+            statements.append(temp)
+        self.consume(TokenType.RIGHT_BRACE, "Expect '}' after block.")
+        return statements
 
     def assignment(self):
         expr = self.orOperator()
@@ -194,25 +175,12 @@ class Parser:
             expr = Expr.Logical(expr, operator, right)
         return expr
 
-    def andOperator(self) -> Expr.Expr:
-        """
-        Implement the AND operator parsing
-        While the token type is the AND operator, we extract the operator and the recurse down
-        to the function below for the right hand side.
-        With this we update the current expression.
-        """
+    def andOperator(self):
         expr = self.equality()
-        ######################################################
-        # TODO: Write your implementation here               #
-        ######################################################
-
-
-
-
-
-        ######################################################
-        # End of your implementation                         #
-        ######################################################
+        while self.match(TokenType.AND):
+            operator = self.previous()
+            right = self.equality()
+            expr = Expr.Logical(expr, operator, right)
         return expr
 
     def equality(self):
@@ -224,25 +192,13 @@ class Parser:
 
         return expr
 
-    def comparison(self) -> Expr.Expr:
-        """
-        Implement the comparison expression parsing
-        While the token type is some comparison operator, we extract the opertaor and recurse down
-        to the function below for the right hand side.
-        With this we update the current expression.
-        """
+    def comparison(self):
         expr = self.term()
-        ######################################################
-        # TODO: Write your implementation here               #
-        ######################################################
+        while self.match(TokenType.GREATER, TokenType.GREATER_EQUAL, TokenType.LESS, TokenType.LESS_EQUAL):
+            operator = self.previous()
+            right = self.term()
+            expr = Expr.Binary(expr, operator, right)
 
-
-
-
-
-        ######################################################
-        # End of your implementation                         #
-        ######################################################
         return expr
 
     def term(self):
