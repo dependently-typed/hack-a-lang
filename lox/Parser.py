@@ -47,7 +47,8 @@ class Parser:
         if self.match(TokenType.FOR):
             return self.forStatement()
         if self.match(TokenType.IF):
-            return self.ifStatement()
+            temp = self.ifStatement()
+            return temp
         if self.match(TokenType.PRINT):
             return self. printStatement()
         if self.match(TokenType.RETURN):
@@ -150,7 +151,8 @@ class Parser:
     def block(self):
         statements = []
         while (not self.check(TokenType.RIGHT_BRACE) and not self.isAtEnd()):
-            statements.append(self.declaration())
+            temp = self.declaration()
+            statements.append(temp)
         self.consume(TokenType.RIGHT_BRACE, "Expect '}' after block.")
         return statements
 

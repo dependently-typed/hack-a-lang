@@ -53,7 +53,8 @@ class If(Stmt):
     def __init__(self, condition, thenBranch, elseBranch):
         assert isinstance(condition, Expr.Expr)
         assert isinstance(thenBranch, Stmt)
-        assert isinstance(elseBranch, Stmt)
+        if (elseBranch != None):
+            assert isinstance(elseBranch, Stmt)
 
         self.condition = condition
         self.thenBranch = thenBranch
