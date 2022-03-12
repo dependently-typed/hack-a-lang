@@ -64,8 +64,8 @@ a lot of conditional statements.
 
 ### Exercises
 
-1. Implement the ...
-2. Implement the ...
+1. Implement the `scanTokens` function in `Scanner.py`
+2. Implement the `identifier` function in `Scanner.py`
 
 ### Relevant files
 
@@ -84,9 +84,9 @@ of tokens that come together to statements that can later be evaluated by the in
 
 ### Exercises
 
-1. Implement the ...
-2. Implement the ...
-
+1. Implement the `block` function in `Parser.py`
+2. Implement the `andOperator` and `comparison` function in `Parser.py`
+3. (Optional) Implement the `forStatement` function in `Parser.py`
 ### Relevant files
 
 ```
@@ -98,19 +98,25 @@ Stmt.py       # The statement class for representing compound statements
 ## Part 4: AST evaluator
 
 The AST evaluator/Interpreter takes the generated AST and performs all of the actions needed
-in the code, from evaluating arithmetic expressions to recursive function calls. 
+in the code from evaluating arithmetic expressions to recursive function calls. The Interpreter
+has to deal with evaluating expressions and statements, executing bits of code, and managing the
+changing states of the environment. 
 
 ### Exercises
 
-1. Implement the ...
-2. Implement the ...
+1. Implement the `executeBlock` function in `Interpreter.py`
+2. Implement the `visitIf` and `visitWhile` function in `Interpreter.py`
+3. (Optional) Implement the `get` function in `Environment.py`
 
 ### Relevant files
 
 ```
-Parser.py     # The actual parser that takes the tokenized string and generates the AST
-Expr.py       # The expression class for representing simple expressions
-Stmt.py       # The statement class for representing compound statements
+Interpreter.py      # The intepreter that will execute the parsed code
+Environment.py      # The environment at runtime, handles defined variables and more
+LoxCallable.py      # Originally and interface for LoxFunction
+LoxFunction.py      # File needed for handling environment changes
+RuntimeError.py     # Custom RuntimeError class
+Return.py           # Custom Return class
 ```
 
 ## Part 5: Bytecode

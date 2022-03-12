@@ -15,21 +15,17 @@ class Environment:
 
     def get(self, name: Token):
         '''
-            Get the value bound to a variable name (we're checking for the variable's existence at runtime)
-            If found then return its value,
-            If this environment has an enclosing environment, search it there.
-            If it is not found we have an error of the variable being not defined.
+            get the value bound to a variable name
+            we're checking for the variable's existence at runtime
         '''
-        ######################################################
-        # TODO: Write your implementation here               #
-        ######################################################
-        
+        if name.lexeme in self.values:
+            return self.values[name.lexeme]
 
-
+        elif self.enclosing is not None:
+            return self.enclosing.get(name)
         
-        ######################################################
-        # End of your implementation                         #
-        ######################################################
+        else:
+            raise RuntimeError(name, f"Undefined variable {name.lexeme}")
 
     def assign(self, name: Token, value: object):
         if name.lexeme in self.values:
