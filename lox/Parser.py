@@ -1,6 +1,4 @@
 import Expr
-import Scanner
-import Expr
 import Stmt
 import Lox
 from TokenType import TokenType

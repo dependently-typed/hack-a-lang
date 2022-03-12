@@ -88,8 +88,19 @@ fun function3(a, b) {
 print function3(2, 3);
 """
 
+simpleRecursion = """
+fun recur(n) {
+  if (n == 1) {
+    return 1;
+  }
+  return recur(n - 1) + 2;
+}
+
+print recur(6);
+"""
+
 # testCases = [simpleBinaryFalse, simpleBinaryTrue, variables, forStatement, whileStatement, functionStatement, functionReturnStatement, fibonacci]
-testCases = [functionCall]
+testCases = [fibonacci]
 
 
 def interpretInput(input: str):

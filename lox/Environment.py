@@ -14,7 +14,7 @@ class Environment:
         if name.lexeme in self.values:
             return self.values[name.lexeme]
 
-        if not self.enclosing is None:
+        if self.enclosing is not None:
             return self.enclosing.get(name)
 
         raise RuntimeError.RuntimeError(name, "Undefined variable \'" + name.lexeme + "\'.")
@@ -24,7 +24,7 @@ class Environment:
             self.values[name.lexeme] = value
             return
 
-        if not self.enclosing is None:
+        if self.enclosing is not None:
             self.enclosing.assign(name, value)
 
         raise RuntimeError.RuntimeError(name, "Undefined variable '" + name.lexeme + "'.")
@@ -39,7 +39,7 @@ class Environment:
         return environment
 
     def getAt(self, distance, name):
-        return self.ancestor(distance).values[name]
+        return self.ancestor(distance).values.get(name)
 
     def assignAt(self, distance, name, value):
         self.ancestor(distance).values[name] = value

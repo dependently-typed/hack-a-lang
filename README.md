@@ -55,9 +55,63 @@ python3 -m soln <file containing your program>
 
 ## Part 2: Lexing
 
+The Lexer/Scanner takes the raw input stream of characters and tokenizes it.
+This will help the parser establish the relationship between each token.
+Basically we are going through the characters in a loop while classifying each
+character/string by comparing it to our list of special tokens or categories through
+a lot of conditional statements.
+
+
+### Exercises
+
+1. Implement the ...
+2. Implement the ...
+
+### Relevant files
+
+```
+Scanner.py      # The actual lexer that tokenizes the character source
+Token.py        # The token class
+TokenTypes.py   # The different types of special tokens
+```
+
 ## Part 3: Parsing
 
+The Parser takes the tokenized version of the source from the Lexer and then 
+creates an Abstract Syntax Tree (AST) based on the grammar rules of the language.
+There are different rules for expressions and statements, which are certain configurations
+of tokens that come together to statements that can later be evaluated by the interpreter.
+
+### Exercises
+
+1. Implement the ...
+2. Implement the ...
+
+### Relevant files
+
+```
+Parser.py     # The actual parser that takes the tokenized string and generates the AST
+Expr.py       # The expression class for representing simple expressions
+Stmt.py       # The statement class for representing compound statements
+```
+
 ## Part 4: AST evaluator
+
+The AST evaluator/Interpreter takes the generated AST and performs all of the actions needed
+in the code, from evaluating arithmetic expressions to recursive function calls. 
+
+### Exercises
+
+1. Implement the ...
+2. Implement the ...
+
+### Relevant files
+
+```
+Parser.py     # The actual parser that takes the tokenized string and generates the AST
+Expr.py       # The expression class for representing simple expressions
+Stmt.py       # The statement class for representing compound statements
+```
 
 ## Part 5: Bytecode
 

@@ -80,6 +80,6 @@ def parseInput(input: str) -> list:
 # print(Token.Token(TokenType.MINUS, "-", None, 1))
 # print(AstPrinter().printast(expression))
 
-statements = parseInput(functionCall)
+statements = parseInput(fibonacci)
 for statement in statements:
     print(AstPrinter().printast(statement))

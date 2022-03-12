@@ -1,4 +1,3 @@
-import Scanner
 import Token
 
 class Expr:
