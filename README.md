@@ -77,7 +77,7 @@ TokenTypes.py   # The different types of special tokens
 
 ### Bonus
 
-1. TODO
+1. Scanners typically use regular expressions (regex) to declare the structure of tokens. Write regexes that match whitespace, identifiers, integers, and floating-point numbers.
 
 ## Part 3: Parsing
 
@@ -100,10 +100,10 @@ Expr.py       # The expression class for representing simple expressions
 Stmt.py       # The statement class for representing compound statements
 ```
 
-### Bonus
+### Extra
 
-1. TODO
-2. TODO
+1. The parser we're using in Lox is called a recursive descent parser. We handle operator precedence by carefully placing our recursive parse calls for every operator. A more elegant solution to the problem is provided by the Pratt parser algorithm (search the web for Pratt parser). Refactor our parser to use this algorithm.
+2. Another way to write parsers is by using something called a parser generator. With a parser generator you define the grammar for your language in a DSL and the tool will automatically generate parser code for you. Try writing a parser for Lox using a parser generator (you can pick any parser generator of your choosing).
 
 ## Part 4: AST evaluator
 
@@ -129,7 +129,7 @@ RuntimeError.py     # Custom RuntimeError class
 Return.py           # Custom Return class
 ```
 
-### Bonus
+### Extra
 
 1. Remove our implementation of functions and try to implement them yourself.
 2. We omitted implementing the OOP features of Lox. Take a shot at that. You
