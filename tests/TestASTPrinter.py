@@ -57,6 +57,5 @@ def parseInput(input: str) -> list:
 # print(AstPrinter().printast(expression))
 
 statements = parseInput(functionStatement)
-print(statements)
 for statement in statements:
     print(AstPrinter().printast(statement))

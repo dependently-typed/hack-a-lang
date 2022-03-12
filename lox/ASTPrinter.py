@@ -103,6 +103,8 @@ class AstPrinter:
                 string += part.accept(self)
             elif isinstance(part, Token.Token):
                 string += part.lexeme
+            elif isinstance(part, list):
+                string += self.transform("", *part)
             else:
                 string += str(part) # don't think we need extra list to array as in Java because python list
         return string
